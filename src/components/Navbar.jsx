@@ -1,40 +1,42 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import NavigationLink from "./ui/NavigationLink";
+import AuthLink from "./ui/buttons/AuthLink";
+import StarUsLink from "./ui/buttons/StarUsLink";
+import ArticleHubLogo from "../assets/ArticleHub.svg";
+import Image from "./ui/Image";
 
 export default function Navbar() {
   return (
     <header>
       <nav className="container mx-auto flex items-center justify-between p-4 lg:px-0">
-        <Link to="/">ArticleHub</Link>
+        <Link to="/">
+          <Image src={ArticleHubLogo} alt="article hub logo" />
+        </Link>
 
-        <ul className="flex flex-col lg:flex-row lg:space-x-6">
+        <ul className="flex flex-col lg:flex-row lg:space-x-12">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavigationLink to="/">Home</NavigationLink>
           </li>
           <li>
-            <NavLink to="/pricing">Pricing</NavLink>
+            <NavigationLink to="/pricing">Pricing</NavigationLink>
           </li>
           <li>
-            <NavLink to="/docs">Docs</NavLink>
+            <NavigationLink to="/blog">Blog</NavigationLink>
           </li>
           <li>
-            <NavLink to="/blog">Blog</NavLink>
+            <NavigationLink to="/docs">Docs</NavigationLink>
           </li>
         </ul>
 
-        <ul className="flex flex-col lg:flex-row lg:space-x-6">
+        <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-2">
           <li>
-            <a
-              href="https://github.com/TomasSorgetti/blog-saas"
-              target="_blank"
-            >
-              Star us
-            </a>
+            <StarUsLink />
           </li>
           <li>
-            <Link to="/auth/login">Sign In</Link>
+            <AuthLink to="/auth/login">Sign In</AuthLink>
           </li>
           <li>
-            <Link to="/auth/register">Sign Up</Link>
+            <AuthLink to="/auth/register">Sign Up</AuthLink>
           </li>
         </ul>
       </nav>

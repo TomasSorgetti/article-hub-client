@@ -1,6 +1,10 @@
 import Navbar from "../components/Navbar";
 
-export default function PublicLayout({ title, description, children }) {
+export default function PublicLayout({
+  title = "ArticleHub",
+  description = "",
+  children,
+}) {
   return (
     <>
       <title>{title}</title>
