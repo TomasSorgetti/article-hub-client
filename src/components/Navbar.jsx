@@ -5,6 +5,7 @@ import StarUsLink from "./ui/buttons/StarUsLink";
 import ArticleHubLogo from "../assets/ArticleHub.svg";
 import Image from "./ui/Image";
 import { SignOutUser } from "../services/auth";
+import Notifications from "./ui/Notifications";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Navbar() {
     if (error) {
       console.log(error);
     }
-    
+
     if (data.success) {
       localStorage.removeItem("isAuthenticated");
       navigate("/auth/login");
@@ -47,6 +48,9 @@ export default function Navbar() {
         <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-2">
           <li>
             <button onClick={handleLogout}>Logout</button>
+          </li>
+          <li>
+            <Notifications />
           </li>
           <li>
             <StarUsLink />
