@@ -6,25 +6,57 @@ import CustomForm from "../../components/ui/forms/CustomForm";
 import GoogleLink from "../../components/ui/buttons/GoogleLink";
 import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
+import { SignInUser } from "../../services/auth";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const handleChange = () => {
-    console.log("Handle Change");
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [rememberme, setRememberme] = useState(false);
+  const [errorResponse, setErrorResponse] = useState("");
+
+  const handleChange = (event) => {
+    setErrorResponse("");
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
   };
-  const handleBlur = () => {
-    console.log("Handle Blur");
+
+  const handleCheck = (event) => {
+    setRememberme(event.target.checked);
   };
-  const handleSubmit = () => {
-    console.log("Handle Submit");
+
+  const handleBlur = () => {};
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { data, error } = await SignInUser({
+      email: form.email,
+      password: form.password,
+      rememberme: rememberme,
+    });
+
+    if (error) {
+      setErrorResponse(error);
+    }
+    if (data.success) {
+      localStorage.setItem("isAuthenticated", true);
+      navigate("/user/welcome");
+    }
   };
 
   return (
     <PublicLayout title="Login Page" description="Login Page">
       <CustomForm
         handleSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-20"
+        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-32"
       >
         <h1 className="text-3xl font-bold">Sign in</h1>
         <p className="text-font-secondary">
@@ -37,11 +69,14 @@ export default function LoginPage() {
           <GithubLink>Sign in with GitHub</GithubLink>
         </div>
 
+        <small className="text-red-500 text-sm min-h-5">{errorResponse}</small>
+
         <CustomInput
           id="email"
           type="email"
           name="email"
           label="Email:"
+          value={form.email}
           icon={EmailIcon}
           placeholder="abc@xyz.com"
           onChange={handleChange}
@@ -53,6 +88,7 @@ export default function LoginPage() {
           type="password"
           name="password"
           label="Password:"
+          value={form.password}
           icon={PasswordIcon}
           placeholder="********"
           onChange={handleChange}
@@ -60,7 +96,7 @@ export default function LoginPage() {
         />
 
         <div className="flex items-center justify-between w-full mt-4">
-          <CustomCheck id="remember-me" handleChange={() => {}}>
+          <CustomCheck id="remember-me" handleChange={handleCheck}>
             Remember me
           </CustomCheck>
           <NavLink

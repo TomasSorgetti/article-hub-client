@@ -23,6 +23,9 @@ import SettingsPage from "./pages/user/account/SettingsPage";
 
 // Admin
 import DashboardPage from "./pages/admin/DashboardPage";
+import NotFoundPage from "./pages/error/NotFoundPage";
+import UnauthorizedPage from "./pages/error/UnauthorizedPage";
+import ServerDownPage from "./pages/error/ServerDownPage";
 
 export default function App() {
   return (
@@ -54,6 +57,11 @@ export default function App() {
 
       {/* Admin private routes */}
       <Route path="/admin" element={<DashboardPage />} />
+
+      {/* Error routes */}
+      <Route path="*" element={<NotFoundPage />} />
+      <Route path="/403" element={<UnauthorizedPage />} />
+      <Route path="/500" element={<ServerDownPage />} />
     </Routes>
   );
 }

@@ -25,7 +25,7 @@ export default function RegisterPage() {
     <PublicLayout title="Register Page" description="Register Page">
       <CustomForm
         handleSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-20"
+        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-32"
       >
         <h1 className="text-3xl font-bold">Sign Up</h1>
         <p className="text-font-secondary">

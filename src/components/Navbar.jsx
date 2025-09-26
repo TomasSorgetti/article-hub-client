@@ -4,10 +4,23 @@ import AuthLink from "./ui/buttons/AuthLink";
 import StarUsLink from "./ui/buttons/StarUsLink";
 import ArticleHubLogo from "../assets/ArticleHub.svg";
 import Image from "./ui/Image";
+import { SignOutUser } from "../services/auth";
 
 export default function Navbar() {
+  const handleLogout = async () => {
+    const { data, error } = await SignOutUser();
+
+    // if (error) {
+    //   console.log(error);
+    // }
+    // if (data.success) {
+    //   localStorage.removeItem("isAuthenticated");
+    //   window.location.reload();
+    // }
+  };
+
   return (
-    <header className="fixed w-full">
+    <header className="fixed w-full top-0 left-0 z-50">
       <nav className="container mx-auto flex items-center justify-between p-4 lg:px-0">
         <Link to="/">
           <Image src={ArticleHubLogo} alt="article hub logo" />
@@ -29,6 +42,9 @@ export default function Navbar() {
         </ul>
 
         <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-2">
+          <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
           <li>
             <StarUsLink />
           </li>
