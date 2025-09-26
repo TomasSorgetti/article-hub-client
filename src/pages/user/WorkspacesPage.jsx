@@ -1,7 +1,9 @@
+import UserLayout from "../../layouts/UserLayout";
+
 export default function WorkspacesPage() {
   return (
-    <div>
+    <UserLayout title="Workspaces Page" description="Workspaces Page">
       <h1>Workspaces Page</h1>
-    </div>
+    </UserLayout>
   );
 }

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavigationLink from "./ui/NavigationLink";
 import AuthLink from "./ui/buttons/AuthLink";
 import StarUsLink from "./ui/buttons/StarUsLink";
@@ -7,16 +7,19 @@ import Image from "./ui/Image";
 import { SignOutUser } from "../services/auth";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     const { data, error } = await SignOutUser();
 
-    // if (error) {
-    //   console.log(error);
-    // }
-    // if (data.success) {
-    //   localStorage.removeItem("isAuthenticated");
-    //   window.location.reload();
-    // }
+    if (error) {
+      console.log(error);
+    }
+    
+    if (data.success) {
+      localStorage.removeItem("isAuthenticated");
+      navigate("/auth/login");
+    }
   };
 
   return (

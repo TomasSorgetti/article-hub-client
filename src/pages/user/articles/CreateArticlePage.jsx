@@ -1,7 +1,9 @@
+import UserLayout from "../../../layouts/UserLayout";
+
 export default function CreateArticlePage() {
   return (
-    <div>
+    <UserLayout title="Create Article Page" description="Create Article Page">
       <h1>Create Article Page</h1>
-    </div>
+    </UserLayout>
   );
 }
