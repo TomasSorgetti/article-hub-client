@@ -24,7 +24,7 @@ export default function LoginPage() {
     <PublicLayout title="Login Page" description="Login Page">
       <CustomForm
         handleSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-12"
+        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-20"
       >
         <h1 className="text-3xl font-bold">Sign in</h1>
         <p className="text-font-secondary">

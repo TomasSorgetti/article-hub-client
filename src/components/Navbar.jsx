@@ -7,7 +7,7 @@ import Image from "./ui/Image";
 
 export default function Navbar() {
   return (
-    <header>
+    <header className="fixed w-full">
       <nav className="container mx-auto flex items-center justify-between p-4 lg:px-0">
         <Link to="/">
           <Image src={ArticleHubLogo} alt="article hub logo" />
