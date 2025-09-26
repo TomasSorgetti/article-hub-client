@@ -1,7 +1,9 @@
+import PublicLayout from "../layouts/PublicLayout";
+
 export default function PricingPage() {
   return (
-    <div>
+    <PublicLayout title="Pricing Page" description="Pricing Page">
       <h1>Pricing Page</h1>
-    </div>
+    </PublicLayout>
   );
 }

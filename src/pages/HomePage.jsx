@@ -1,7 +1,9 @@
+import PublicLayout from "../layouts/PublicLayout";
+
 export default function HomePage() {
   return (
-    <div>
+    <PublicLayout title="Home Page" description="Home Page">
       <h1>Home Page</h1>
-    </div>
+    </PublicLayout>
   );
 }
