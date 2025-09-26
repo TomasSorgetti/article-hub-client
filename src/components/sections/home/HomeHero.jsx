@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import CtaButton from "../../ui/buttons/CtaButton";
+import Label from "../../ui/Label";
 
 export default function HomeHero() {
   return (
     <section className="h-screen text-center flex flex-col items-center justify-center gap-6">
+      <Label variant="primary" className="uppercase bg-primary/30">
+        Your content, wherever you need it
+      </Label>
       <h1 className="text-6xl font-light max-w-[720px] leading-17">
         Build, collaborate, and{" "}
         <span className="text-primary">scale without limits.</span>
