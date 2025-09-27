@@ -1,33 +1,16 @@
 import { privateApi } from "./api";
+import { handleApiRequest } from "./apiHelpers";
 
-export async function SignInUser({ email, password, rememberme }) {
-  let data = null;
-  let error = null;
-
-  try {
-    data = await privateApi.post(`/auth/login`, {
-      email,
-      password,
-      rememberme,
-    });
-  } catch (err) {
-    error = err.response.data.error.message;
-  }
-
-  return { data: data?.data, error };
+export function SignInUser({ email, password, rememberme }) {
+  return handleApiRequest(() =>
+    privateApi.post(`/auth/login`, { email, password, rememberme })
+  );
 }
 
-export async function SignOutUser() {
-  let data = null;
-  let error = null;
+export function SignOutUser() {
+  return handleApiRequest(() => privateApi.post(`/auth/logout`));
+}
 
-  try {
-    data = await privateApi.post(`/auth/logout`);
-  } catch (err) {
-    console.log(err);
-
-    error = err.response.data.error.message;
-  }
-
-  return { data: data?.data, error };
+export function getProfile() {
+  return handleApiRequest(() => privateApi.get(`/users/me`));
 }

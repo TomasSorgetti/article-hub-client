@@ -1,9 +1,33 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
+import { GetMyNotifications } from "../../services/notifications";
 
 export default function Notifications() {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [notifications, setNotifications] = useState({
+    items: [],
+    total: 0,
+  });
+
+  useEffect(() => {
+    // todo => esto deberia ser una suscripcion al estado global.
+    async function getNotifications() {
+      setIsLoading(true);
+      const { data, error } = await GetMyNotifications();
+
+      if (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
+
+      setIsLoading(false);
+      setNotifications(data.data);
+    }
+
+    getNotifications();
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -32,15 +56,34 @@ export default function Notifications() {
             fillRule="evenodd"
           ></path>
         </svg>
+
+        {notifications.total > 0 && (
+          <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-red-500 rounded-full border-2 border-background">
+            {notifications.total}
+          </span>
+        )}
       </button>
 
       <ul
         className={`absolute top-12 right-0 w-64 bg-background border border-border rounded-md shadow-lg 
             ${isOpen ? "block" : "hidden"}`}
       >
-        <li>item 1</li>
-        <li>item 2</li>
-        <li>item 3</li>
+        {isLoading && <li className="p-2">Loding...</li>}
+        {!isLoading && notifications.total === 0 && (
+          <li className="p-2">
+            <p>No tienes notificaciones</p>
+          </li>
+        )}
+        {!isLoading &&
+          notifications?.items.map((notification) => {
+            console.log("Notification: ", notification);
+
+            return (
+              <li key={notification._id} className="p-2">
+                <p>{notification.message}</p>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );

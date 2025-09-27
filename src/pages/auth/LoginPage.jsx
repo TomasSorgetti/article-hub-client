@@ -8,11 +8,14 @@ import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
 import { NavLink, useNavigate } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
-import { SignInUser } from "../../services/auth";
 import { useState } from "react";
+import { useAuthStore } from "../../lib/store/auth";
 
 export default function LoginPage() {
+  const { login, loading } = useAuthStore();
+
   const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -37,18 +40,16 @@ export default function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { data, error } = await SignInUser({
+    const response = await login({
       email: form.email,
       password: form.password,
-      rememberme: rememberme,
+      rememberme,
     });
 
-    if (error) {
-      setErrorResponse(error);
-    }
-    if (data.success) {
-      localStorage.setItem("isAuthenticated", true);
+    if (response.success) {
       navigate("/user/welcome");
+    } else {
+      setErrorResponse(response.error || "Login failed");
     }
   };
 
@@ -107,7 +108,9 @@ export default function LoginPage() {
           </NavLink>
         </div>
 
-        <FormButton className="mt-4">Sign In</FormButton>
+        <FormButton disabled={loading} className="mt-4">
+          Sign In
+        </FormButton>
 
         <small className="text-base text-center mt-4">
           You don´t have an account?{" "}

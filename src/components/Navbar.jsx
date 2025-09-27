@@ -6,20 +6,19 @@ import ArticleHubLogo from "../assets/ArticleHub.svg";
 import Image from "./ui/Image";
 import { SignOutUser } from "../services/auth";
 import Notifications from "./ui/Notifications";
+import { useAuthStore } from "../lib/store/auth";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { isAdmin, isAuthenticated, logout } = useAuthStore();
 
   const handleLogout = async () => {
-    const { data, error } = await SignOutUser();
+    const response = await logout();
 
-    if (error) {
-      console.log(error);
-    }
-
-    if (data.success) {
-      localStorage.removeItem("isAuthenticated");
+    if (response.success) {
       navigate("/auth/login");
+    } else {
+      navigate("/500");
     }
   };
 
@@ -45,23 +44,36 @@ export default function Navbar() {
           </li>
         </ul>
 
-        <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-2">
-          <li>
-            <button onClick={handleLogout}>Logout</button>
-          </li>
-          <li>
-            <Notifications />
-          </li>
-          <li>
-            <StarUsLink />
-          </li>
-          <li>
-            <AuthLink to="/auth/login">Sign In</AuthLink>
-          </li>
-          <li>
-            <AuthLink to="/auth/register">Sign Up</AuthLink>
-          </li>
-        </ul>
+        {isAuthenticated ? (
+          <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-4">
+            <li>
+              <button onClick={handleLogout} className="cursor-pointer px-2">
+                Logout
+              </button>
+            </li>
+            <li>{/* <Notifications /> */}</li>
+            {isAdmin && (
+              <li>
+                <Link to="/admin/dashboard">Admin Dashboard</Link>
+              </li>
+            )}
+            <li>
+              <AuthLink to="/user/welcome">Account</AuthLink>
+            </li>
+          </ul>
+        ) : (
+          <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-2">
+            <li>
+              <StarUsLink />
+            </li>
+            <li>
+              <AuthLink to="/auth/login">Sign In</AuthLink>
+            </li>
+            <li>
+              <AuthLink to="/auth/register">Sign Up</AuthLink>
+            </li>
+          </ul>
+        )}
       </nav>
     </header>
   );
