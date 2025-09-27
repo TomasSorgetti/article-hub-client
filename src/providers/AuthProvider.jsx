@@ -33,7 +33,7 @@ export default function AuthProvider({ children }) {
     };
 
     loadProfile();
-  }, [user, isAuthenticated, setUser, logout, loading, navigate]);
+  }, [isAuthenticated, user, logout, setUser, navigate]);
 
   return children;
 }

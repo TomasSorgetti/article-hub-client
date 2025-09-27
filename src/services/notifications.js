@@ -1,14 +1,6 @@
 import { privateApi } from "./api";
+import { handleApiRequest } from "./apiHelpers";
 
 export async function GetMyNotifications() {
-  let data = null;
-  let error = null;
-
-  try {
-    data = await privateApi.get(`/notifications/me`);
-  } catch (err) {
-    error = err.response.data.error.message;
-  }
-
-  return { data: data?.data, error };
+  return handleApiRequest(() => privateApi.get(`/notifications/me`));
 }

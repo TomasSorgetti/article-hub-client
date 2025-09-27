@@ -4,7 +4,6 @@ import AuthLink from "./ui/buttons/AuthLink";
 import StarUsLink from "./ui/buttons/StarUsLink";
 import ArticleHubLogo from "../assets/ArticleHub.svg";
 import Image from "./ui/Image";
-import { SignOutUser } from "../services/auth";
 import Notifications from "./ui/Notifications";
 import { useAuthStore } from "../lib/store/auth";
 
@@ -51,7 +50,9 @@ export default function Navbar() {
                 Logout
               </button>
             </li>
-            <li>{/* <Notifications /> */}</li>
+            <li>
+              <Notifications />
+            </li>
             {isAdmin && (
               <li>
                 <Link to="/admin/dashboard">Admin Dashboard</Link>

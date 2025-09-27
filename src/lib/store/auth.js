@@ -1,4 +1,3 @@
-// src/lib/store/auth.js
 import { create } from "zustand";
 import { SignInUser, SignOutUser } from "../../services/auth";
 

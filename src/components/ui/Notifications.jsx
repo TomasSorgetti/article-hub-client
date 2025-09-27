@@ -1,36 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import { GetMyNotifications } from "../../services/notifications";
+import { useNotificationsStore } from "../../lib/store/notifications";
 
 export default function Notifications() {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [notifications, setNotifications] = useState({
-    items: [],
-    total: 0,
-  });
 
-  useEffect(() => {
-    // todo => esto deberia ser una suscripcion al estado global.
-    async function getNotifications() {
-      setIsLoading(true);
-      const { data, error } = await GetMyNotifications();
+  const { items, total, loading } = useNotificationsStore();
 
-      if (error) {
-        console.log(error);
-        setIsLoading(false);
-      }
-
-      setIsLoading(false);
-      setNotifications(data.data);
-    }
-
-    getNotifications();
-  }, []);
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+  const toggleDropdown = async () => {
+    setIsOpen((prev) => !prev);
   };
 
   useClickOutside(dropdownRef, () => setIsOpen(false));
@@ -57,33 +36,32 @@ export default function Notifications() {
           ></path>
         </svg>
 
-        {notifications.total > 0 && (
-          <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-red-500 rounded-full border-2 border-background">
-            {notifications.total}
+        {total > 0 && (
+          <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-semibold text-white bg-red-500 rounded-full border-2 border-background">
+            {total}
           </span>
         )}
       </button>
 
       <ul
-        className={`absolute top-12 right-0 w-64 bg-background border border-border rounded-md shadow-lg 
-            ${isOpen ? "block" : "hidden"}`}
+        className={`absolute top-12 right-0 w-64 bg-background border border-border rounded-md shadow-lg ${
+          isOpen ? "block" : "hidden"
+        }`}
       >
-        {isLoading && <li className="p-2">Loding...</li>}
-        {!isLoading && notifications.total === 0 && (
+        {loading && <li className="p-2">Loading...</li>}
+
+        {!loading && total === 0 && (
           <li className="p-2">
-            <p>No tienes notificaciones</p>
+            <p>There are no notifications.</p>
           </li>
         )}
-        {!isLoading &&
-          notifications?.items.map((notification) => {
-            console.log("Notification: ", notification);
 
-            return (
-              <li key={notification._id} className="p-2">
-                <p>{notification.message}</p>
-              </li>
-            );
-          })}
+        {!loading &&
+          items.map((notification) => (
+            <li key={notification._id} className="p-2">
+              <p>{notification.message}</p>
+            </li>
+          ))}
       </ul>
     </div>
   );
