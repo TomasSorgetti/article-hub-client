@@ -14,3 +14,7 @@ export function SignOutUser() {
 export function getProfile() {
   return handleApiRequest(() => privateApi.get(`/users/me`));
 }
+
+export const refreshToken = async () => {
+  return handleApiRequest(() => privateApi.post(`/auth/refresh`));
+};

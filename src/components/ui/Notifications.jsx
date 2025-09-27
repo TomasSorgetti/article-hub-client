@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useNotificationsStore } from "../../lib/store/notifications";
+import { Link } from "react-router-dom";
 
 export default function Notifications() {
   const dropdownRef = useRef(null);
@@ -44,7 +45,7 @@ export default function Notifications() {
       </button>
 
       <ul
-        className={`absolute top-12 right-0 w-64 bg-background border border-border rounded-md shadow-lg ${
+        className={`absolute top-12 right-0 w-74 space-y-1 p-2 bg-background border border-border rounded-md shadow-lg ${
           isOpen ? "block" : "hidden"
         }`}
       >
@@ -57,11 +58,31 @@ export default function Notifications() {
         )}
 
         {!loading &&
-          items.map((notification) => (
-            <li key={notification._id} className="p-2">
-              <p>{notification.message}</p>
-            </li>
-          ))}
+          items.map((notification, index) => {
+            return (
+              <li
+                key={notification._id}
+                className={`p-2 flex items-center justify-between hover:bg-border/20 ${
+                  notification.read
+                    ? "text-font-secondary"
+                    : "text-font-primary"
+                }
+                ${index !== items.length - 1 ? "border-b border-border/50" : ""}
+                  `}
+              >
+                <p>{notification.message}</p>
+                {notification.link && (
+                  <Link
+                    href={`/user${notification.link}`}
+                    rel="noreferrer"
+                    className="text-sm"
+                  >
+                    View
+                  </Link>
+                )}
+              </li>
+            );
+          })}
       </ul>
     </div>
   );
