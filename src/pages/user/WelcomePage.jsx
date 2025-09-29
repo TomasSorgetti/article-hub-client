@@ -6,8 +6,8 @@ export default function WelcomePage() {
 
   return (
     <UserLayout title="Welcome Page" description="Welcome Page">
-      <main className="mt-32">
-        <h1>Welcome {user?.username}</h1>
+      <main className="mt-32 container mx-auto">
+        <h1 className="text-3xl font-bold">Welcome {user?.username}</h1>
       </main>
     </UserLayout>
   );
