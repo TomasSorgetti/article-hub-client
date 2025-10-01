@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAuthStore } from "../lib/store/auth";
 
 const API_URI = import.meta.env.VITE_API_URI;
 
@@ -26,14 +25,15 @@ privateApi.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const { refresh, logout } = useAuthStore.getState();
-
       try {
-        await refresh();
+        await axios.post(
+          `${API_URI}/api/auth/refresh`,
+          {},
+          { withCredentials: true }
+        );
+
         return privateApi.request(originalRequest);
-      } catch (err) {
-        console.log(err);
-        await logout();
+      } catch (error) {
         return Promise.reject(error);
       }
     }

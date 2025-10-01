@@ -14,12 +14,14 @@ export default function AuthProvider({ children }) {
           const { data, error } = await getProfile();
 
           if (error || !data?.success) {
-            throw new Error(error?.message || error);
+            throw new Error(error);
           } else {
             setUser(data.data);
           }
         } catch (err) {
-          console.log(err);
+          if (err.message === "Session not found") {
+            navigate("/500");
+          }
 
           const logoutResponse = await logout();
 

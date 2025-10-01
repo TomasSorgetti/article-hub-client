@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { SignInUser, SignOutUser, refreshToken } from "../../services/auth";
+import { SignInUser, SignOutUser } from "../../services/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -81,16 +81,6 @@ export const useAuthStore = create((set) => ({
       set({ loading: false, error: err?.message || err });
       return { success: false, error: err?.message || err };
     }
-  },
-
-  refresh: async () => {
-    const { data, error } = await refreshToken();
-
-    if (error || !data?.success) {
-      throw new Error(error?.message || error);
-    }
-
-    return data;
   },
 
   setUser: (user) => set({ user }),

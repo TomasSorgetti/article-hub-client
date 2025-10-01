@@ -8,7 +8,7 @@ import AuthProvider from "./providers/AuthProvider.jsx";
 import NotificationsProvider from "./providers/NotificationsProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <NotificationsProvider>
@@ -16,5 +16,5 @@ createRoot(document.getElementById("root")).render(
         </NotificationsProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  // </StrictMode>
 );
