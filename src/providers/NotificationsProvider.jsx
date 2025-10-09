@@ -7,6 +7,7 @@ export default function NotificationsProvider({ children }) {
   const { fetchNotifications, addNotification } = useNotificationsStore();
   const { user } = useAuthStore();
 
+  // todo=> unsuscribe?
   useEffect(() => {
     if (!user) return;
     fetchNotifications();

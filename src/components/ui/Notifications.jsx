@@ -1,16 +1,21 @@
 import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useNotificationsStore } from "../../lib/store/notifications";
-import { Link } from "react-router-dom";
+import NotificationCard from "./cards/NotificationCard";
 
 export default function Notifications() {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { items, total, loading } = useNotificationsStore();
+  const { items, total, loading, removeNotification, markAllAsRead } =
+    useNotificationsStore();
 
   const toggleDropdown = async () => {
     setIsOpen((prev) => !prev);
+
+    if (!loading && items.length > 0 && total > 0 && !isOpen) {
+      await markAllAsRead();
+    }
   };
 
   useClickOutside(dropdownRef, () => setIsOpen(false));
@@ -51,35 +56,24 @@ export default function Notifications() {
       >
         {loading && <li className="p-2">Loading...</li>}
 
-        {!loading && total === 0 && (
+        {!loading && total === 0 && items.length === 0 && (
           <li className="p-2">
             <p>There are no notifications.</p>
           </li>
         )}
 
         {!loading &&
-          items.map((notification, index) => {
+          items.map(({ _id, link, message, read }, index) => {
             return (
-              <li
-                key={notification._id}
-                className={`p-2 flex items-center justify-between hover:bg-border/20 ${
-                  notification.read
-                    ? "text-font-secondary"
-                    : "text-font-primary"
-                }
-                ${index !== items.length - 1 ? "border-b border-border/50" : ""}
-                  `}
-              >
-                <p>{notification.message}</p>
-                {notification.link && (
-                  <Link
-                    href={`/user${notification.link}`}
-                    rel="noreferrer"
-                    className="text-sm"
-                  >
-                    View
-                  </Link>
-                )}
+              <li key={_id}>
+                <NotificationCard
+                  id={_id}
+                  message={message}
+                  link={link}
+                  isRead={read}
+                  isLastItem={index === items.length - 1}
+                  removeNotification={removeNotification}
+                />
               </li>
             );
           })}

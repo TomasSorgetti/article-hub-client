@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { GetMyNotifications } from "../../services/notifications";
+import {
+  GetMyNotifications,
+  DeleteNotification,
+  MarkAllNotificationsAsRead,
+} from "../../services/notifications";
 
 export const useNotificationsStore = create((set) => ({
   items: [],
@@ -28,5 +32,46 @@ export const useNotificationsStore = create((set) => ({
       items: [notification, ...state.items],
       total: state.total + 1,
     }));
+  },
+
+  removeNotification: async (id) => {
+    set((state) => ({ ...state, isLoading: true }));
+
+    const { error } = await DeleteNotification(id);
+
+    if (!error) {
+      set((state) => ({
+        ...state,
+        items: state.items.filter((item) => item._id !== id),
+        total: state.total - 1,
+        isLoading: false,
+      }));
+    } else {
+      set((state) => ({
+        ...state,
+        isLoading: false,
+        error: error.message || error,
+      }));
+    }
+  },
+
+  markAllAsRead: async () => {
+    set((state) => ({ ...state, isLoading: true }));
+    const { error } = await MarkAllNotificationsAsRead();
+
+    if (!error) {
+      set((state) => ({
+        ...state,
+        items: state.items.map((item) => ({ ...item, read: true })),
+        total: 0,
+        isLoading: false,
+      }));
+    } else {
+      set((state) => ({
+        ...state,
+        isLoading: false,
+        error: error.message || error,
+      }));
+    }
   },
 }));
