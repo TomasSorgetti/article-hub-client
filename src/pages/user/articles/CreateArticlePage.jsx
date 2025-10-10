@@ -2,6 +2,7 @@ import { useState } from "react";
 import ArticleSelector from "../../../components/ui/forms/ArticleSelector";
 import CustomForm from "../../../components/ui/forms/CustomForm";
 import UserLayout from "../../../layouts/UserLayout";
+import Editor from "../../../components/ui/editor/Editor";
 
 export default function CreateArticlePage() {
   const [form, setForm] = useState({
@@ -28,6 +29,10 @@ export default function CreateArticlePage() {
           : "published",
     });
   };
+
+  const handleEditorChange = (html) => {
+    console.log("Contenido:", html);
+  };
   return (
     <UserLayout title="Create Article Page" description="Create Article Page">
       <main className="mt-32 container mx-auto">
@@ -50,14 +55,16 @@ export default function CreateArticlePage() {
                 name="title"
                 onChange={handleChange}
                 value={form.title}
-                className="border-b border-border h-12 w-full"
+                className="border-b border-border h-12 w-full mb-10"
               />
 
-              <textarea
-                name=""
-                id=""
-                className="border border-border h-96 w-full resize-none mt-4"
-              ></textarea>
+              {/* Text Editor */}
+              <div className="w-full h-full min-h-[400px]">
+                <Editor
+                  onChange={handleEditorChange}
+                  placeholder="Write something here..."
+                />
+              </div>
             </div>
             <div className="w-full lg:w-1/3 lg:px-8">
               <input
