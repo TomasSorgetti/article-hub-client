@@ -7,6 +7,10 @@
   --color-secondary-bis: #13bac0;
   --color-tertiary: #d87947;
 
+  --color-card: #121222;
+  --color-card-bis: #070616;
+
+  --color-card-border: #1c1b2b;
   --color-border: #3c3c3c;
 
   --color-font-primary: #ffffff;
@@ -15,4 +19,51 @@
 html,
 body {
   @apply bg-background text-font-primary;
+}
+
+.card-bg {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    var(--color-card) 0%,
+    var(--color-card-bis) 100%
+  );
+  border: 1px solid var(--color-card-border);
+}
+.card-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  z-index: 1;
+}
+
+.card-bg-2 {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    var(--color-card) 0%,
+    var(--color-card-bis) 100%
+  );
+  border: 1px solid var(--color-card-border);
+}
+.card-bg-2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff13;
+  border-radius: 10px;
+  z-index: 1;
 }

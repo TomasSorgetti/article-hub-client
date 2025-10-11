@@ -1,14 +1,32 @@
-import UserLayout from "../../layouts/UserLayout";
+import AddNewWorkbenchCard from "../../components/ui/cards/AddNewWorkbenchCard";
+import WorkbenchCard from "../../components/ui/cards/WorkbenchCard";
+import PublicLayout from "../../layouts/PublicLayout";
 import { useAuthStore } from "../../lib/store/auth";
 
 export default function WelcomePage() {
   const { user } = useAuthStore();
 
   return (
-    <UserLayout title="Welcome Page" description="Welcome Page">
+    <PublicLayout title="Welcome Page" description="Welcome Page">
       <main className="mt-32 container mx-auto">
         <h1 className="text-3xl font-bold">Welcome {user?.username}</h1>
+        <div className="mt-12 flex gap-4 flex-wrap">
+          {user?.workbenches?.map((workbench) => (
+            <WorkbenchCard
+              key={workbench.id}
+              id={workbench.id}
+              title={workbench.name}
+              owner={workbench.owner}
+              members={workbench.members}
+              // role={workbench.role}
+              isArchived={workbench.isArchived}
+              createdAt={workbench.createdAt}
+              settings={workbench.settings}
+            />
+          ))}
+          <AddNewWorkbenchCard />
+        </div>
       </main>
-    </UserLayout>
+    </PublicLayout>
   );
 }
