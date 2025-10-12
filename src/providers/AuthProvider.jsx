@@ -12,7 +12,6 @@ export default function AuthProvider({ children }) {
       if (!user && isAuthenticated && !loading) {
         try {
           const { data, error } = await getProfile();
-          console.log("USER DATA: ", data);
 
           if (error || !data?.success) {
             throw new Error(error);

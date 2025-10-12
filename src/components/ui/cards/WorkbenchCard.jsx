@@ -13,7 +13,7 @@ export default function WorkbenchCard({
 }) {
   return (
     <a
-      href={`/workbench/${id}`}
+      href={`/user/workbench/${id}`}
       className={`relative flex flex-col items-start w-full max-w-[22.5rem] h-[12rem] card-bg cursor-pointer p-4 rounded-2xl hover:shadow-lg hover:shadow-card ${
         isArchived ? "opacity-50" : ""
       }`}
