@@ -1,10 +1,16 @@
-import PricingCard from "../../../../components/ui/cards/PricingCard";
+import { useState } from "react";
+import PricingCarousel from "../../../../components/ui/carousels/PricingCarousel";
 import UserLayout from "../../../../layouts/UserLayout";
 import { SuscribeToProPlan } from "../../../../services/subscriptions";
 
 export default function BillingPlansPage() {
-  const handleClick = async (planId, isActualPlan) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleChangePlan = async (planId, isActualPlan) => {
     if (isActualPlan) return;
+
+    setLoading(true);
+
     try {
       const { data, error } = await SuscribeToProPlan(planId);
       console.log(data, error);
@@ -13,56 +19,27 @@ export default function BillingPlansPage() {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <UserLayout title="Billing Plans Page" description="Billing Plans Page">
-      <main className="mt-32 container mx-auto">
-        <h1>Billing Plans Page</h1>
-
-        <div className="mt-32 flex justify-center gap-4 w-full">
-          <PricingCard
-            id="68cdd413217f9ea3b63e181e"
-            name="Free Plan"
-            price="$0"
-            items={[
-              "3 Workbenches",
-              "3 Collaborators",
-              "1 API Key",
-              "500 MB Storage",
-            ]}
-            isActualPlan={true}
-            handleClick={handleClick}
-          />
-          <PricingCard
-            id="68cdd413217f9ea3b63e181e"
-            name="Pro Plan"
-            price="$10"
-            popular
-            items={[
-              "3 Workbenches",
-              "3 Collaborators",
-              "1 API Key",
-              "500 MB Storage",
-            ]}
-            isActualPlan={false}
-            handleClick={handleClick}
-          />
-          <PricingCard
-            id="68cdd413217f9ea3b63e1821"
-            name="Premium Plan"
-            price="$0"
-            items={[
-              "3 Workbenches",
-              "3 Collaborators",
-              "1 API Key",
-              "500 MB Storage",
-            ]}
-            isActualPlan={false}
-            handleClick={handleClick}
-          />
+      <main className="mt-20 container mx-auto">
+        <div className="relative text-center z-20 translate-y-20">
+          <h1 className="text-5xl font-bold ">Select your plan</h1>
+          <p className="mt-4 text-font-secondary ">
+            Select the plan that best suits your needs.
+          </p>
         </div>
+        <PricingCarousel
+          handleChangePlan={handleChangePlan}
+          loading={loading}
+        />
+        <small className="relative z-20 -translate-y-30 block text-center text-base text-font-secondary">
+          Cancel anytime for free.
+        </small>
       </main>
     </UserLayout>
   );

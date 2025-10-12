@@ -67,3 +67,12 @@ body {
   border-radius: 10px;
   z-index: 1;
 }
+
+.bg-circular {
+  background: #08041200;
+  background: radial-gradient(
+    circle,
+    rgba(8, 4, 18, 0) 30%,
+    rgba(8, 4, 18, 1) 80%
+  );
+}
