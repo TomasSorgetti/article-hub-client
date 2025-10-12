@@ -3,7 +3,7 @@ import UserLayout from "../../../../layouts/UserLayout";
 import { VerifySession } from "../../../../services/subscriptions";
 import { useNavigate } from "react-router-dom";
 
-export default function SuccessPage() {
+export default function BillingSuccessPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const searchParams = new URLSearchParams(location.search);

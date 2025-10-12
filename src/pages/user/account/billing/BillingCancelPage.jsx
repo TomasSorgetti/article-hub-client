@@ -1,6 +1,6 @@
 import UserLayout from "../../../../layouts/UserLayout";
 
-export default function BillingPage() {
+export default function BillingCancelPage() {
   return (
     <UserLayout title="Billing Page" description="Billing Page">
       <main className="mt-32 container mx-auto">

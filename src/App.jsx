@@ -26,8 +26,11 @@ import DashboardPage from "./pages/admin/DashboardPage";
 import NotFoundPage from "./pages/error/NotFoundPage";
 import UnauthorizedPage from "./pages/error/UnauthorizedPage";
 import ServerDownPage from "./pages/error/ServerDownPage";
-import BillingPage from "./pages/user/account/BillingPage";
-import SuccessPage from "./pages/user/account/SuccessPage";
+
+import BillingPage from "./pages/user/account/billing/BillingPage";
+import BillingSuccessPage from "./pages/user/account/billing/BillingSuccessPage";
+import BillingCancelPage from "./pages/user/account/billing/BillingCancelPage";
+import BillingPlansPage from "./pages/user/account/billing/BillingPlansPage";
 
 export default function App() {
   return (
@@ -54,10 +57,22 @@ export default function App() {
         path="/user/articles/update/:articleId"
         element={<UpdateArticlePage />}
       />
+
       <Route path="/user/account/profile" element={<ProfilePage />} />
       <Route path="/user/account/settings" element={<SettingsPage />} />
       <Route path="/user/account/billing" element={<BillingPage />} />
-      <Route path="/user/account/billing/success" element={<SuccessPage />} />
+      <Route
+        path="/user/account/billing/success"
+        element={<BillingSuccessPage />}
+      />
+      <Route
+        path="/user/account/billing/cancel"
+        element={<BillingCancelPage />}
+      />
+      <Route
+        path="/user/account/billing/plans"
+        element={<BillingPlansPage />}
+      />
 
       {/* Admin private routes */}
       <Route path="/admin" element={<DashboardPage />} />
