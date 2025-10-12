@@ -1,10 +1,11 @@
+import PricingCard from "../../../../components/ui/cards/PricingCard";
 import UserLayout from "../../../../layouts/UserLayout";
 import { SuscribeToProPlan } from "../../../../services/subscriptions";
 
 export default function BillingPlansPage() {
-  const handleClick = async () => {
+  const handleClick = async (planId, isActualPlan) => {
+    if (isActualPlan) return;
     try {
-      const planId = "68cdd413217f9ea3b63e181e";
       const { data, error } = await SuscribeToProPlan(planId);
       console.log(data, error);
       if (data?.data?.url) {
@@ -19,13 +20,48 @@ export default function BillingPlansPage() {
     <UserLayout title="Billing Plans Page" description="Billing Plans Page">
       <main className="mt-32 container mx-auto">
         <h1>Billing Plans Page</h1>
-        <div className="mt-32">
-          <button
-            onClick={handleClick}
-            className="cursor-pointer bg-white px-8 py-2 rounded text-black font-bold"
-          >
-            Upgrade Plan to Pro
-          </button>
+
+        <div className="mt-32 flex justify-center gap-4 w-full">
+          <PricingCard
+            id="68cdd413217f9ea3b63e181e"
+            name="Free Plan"
+            price="$0"
+            items={[
+              "3 Workbenches",
+              "3 Collaborators",
+              "1 API Key",
+              "500 MB Storage",
+            ]}
+            isActualPlan={true}
+            handleClick={handleClick}
+          />
+          <PricingCard
+            id="68cdd413217f9ea3b63e181e"
+            name="Pro Plan"
+            price="$10"
+            popular
+            items={[
+              "3 Workbenches",
+              "3 Collaborators",
+              "1 API Key",
+              "500 MB Storage",
+            ]}
+            isActualPlan={false}
+            handleClick={handleClick}
+          />
+          <PricingCard
+            id="68cdd413217f9ea3b63e1821"
+            name="Premium Plan"
+            price="$0"
+            items={[
+              "3 Workbenches",
+              "3 Collaborators",
+              "1 API Key",
+              "500 MB Storage",
+            ]}
+            isActualPlan={false}
+            handleClick={handleClick}
+          />
         </div>
       </main>
     </UserLayout>
