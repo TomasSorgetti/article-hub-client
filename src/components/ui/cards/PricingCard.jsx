@@ -21,9 +21,9 @@ export default function PricingCard({
 
   const handleClick = async () => {
     if (!isAuthenticated) {
-      navigate("/auth/login");
+      navigate("/auth/register?redirect=/pricing");
+      return;
     }
-    console.log(isAuthenticated, isActualPlan, isLoading, id, loading);
     if (isActualPlan || isLoading || !id || loading) return;
 
     setIsLoading(true);

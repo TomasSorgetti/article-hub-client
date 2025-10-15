@@ -15,14 +15,16 @@ export default function PricingPage() {
     }
   }, [plans.length, fetchPlans]);
 
-
   return (
     <PublicLayout title="Pricing Page" description="Pricing Page">
-      <main className="mt-20 container mx-auto">
-        <div className="relative text-center z-20 translate-y-20">
-          <h1 className="text-5xl font-bold ">Select your plan</h1>
-          <p className="mt-4 text-font-secondary ">
-            Select the plan that best suits your needs.
+      <main className="mt-32 container mx-auto">
+        <div className="relative text-center z-20 translate-y-20 flex flex-col items-center gap-2">
+          <h1 className="text-5xl font-bold max-w-xl">
+            Choose your perfect plan to grow your business
+          </h1>
+          <p className="mt-4 text-font-secondary text-lg max-w-md">
+            Select the subscription plan that fits your goals, from starting
+            your blog to scaling your content strategy with advanced SEO tools.
           </p>
         </div>
 
@@ -33,7 +35,7 @@ export default function PricingPage() {
         />
 
         <small className="relative z-20 -translate-y-30 block text-center text-base text-font-secondary">
-          Cancel anytime for free.
+          Cancel or upgrade anytime. No hidden fees.
         </small>
       </main>
     </PublicLayout>

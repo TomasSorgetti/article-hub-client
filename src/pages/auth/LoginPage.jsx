@@ -6,7 +6,7 @@ import CustomForm from "../../components/ui/forms/CustomForm";
 import GoogleLink from "../../components/ui/buttons/GoogleLink";
 import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
 import { useState } from "react";
 import { useAuthStore } from "../../lib/store/auth";
@@ -15,6 +15,10 @@ export default function LoginPage() {
   const { login, loading } = useAuthStore();
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const redirect = searchParams.get("redirect");
 
   const [form, setForm] = useState({
     email: "",
@@ -47,7 +51,7 @@ export default function LoginPage() {
     });
 
     if (response.success) {
-      navigate("/user/welcome");
+      navigate(redirect || "/user/welcome");
     } else {
       setErrorResponse(response.error || "Login failed");
     }

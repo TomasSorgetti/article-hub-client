@@ -7,18 +7,28 @@ import CustomForm from "../../components/ui/forms/CustomForm";
 import GoogleLink from "../../components/ui/buttons/GoogleLink";
 import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const redirect = searchParams.get("redirect");
+
   const handleChange = () => {
     console.log("Handle Change");
   };
   const handleBlur = () => {
     console.log("Handle Blur");
   };
-  const handleSubmit = () => {
-    console.log("Handle Submit");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (redirect) {
+      navigate(`/auth/login?redirect=${redirect}`);
+    }
   };
 
   return (
@@ -79,7 +89,10 @@ export default function RegisterPage() {
 
         <small className="text-base text-center mt-4">
           Allready have an account?{" "}
-          <NavLink to="/auth/login" className="text-primary hover:underline">
+          <NavLink
+            to={redirect ? `/auth/login?redirect=${redirect}` : "/auth/login"}
+            className="text-primary hover:underline"
+          >
             Login here
           </NavLink>
         </small>
