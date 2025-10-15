@@ -30,7 +30,6 @@ import ServerDownPage from "./pages/error/ServerDownPage";
 import BillingPage from "./pages/user/account/billing/BillingPage";
 import BillingSuccessPage from "./pages/user/account/billing/BillingSuccessPage";
 import BillingCancelPage from "./pages/user/account/billing/BillingCancelPage";
-import BillingPlansPage from "./pages/user/account/billing/BillingPlansPage";
 
 export default function App() {
   return (
@@ -68,10 +67,6 @@ export default function App() {
       <Route
         path="/user/account/billing/cancel"
         element={<BillingCancelPage />}
-      />
-      <Route
-        path="/user/account/billing/plans"
-        element={<BillingPlansPage />}
       />
 
       {/* Admin private routes */}

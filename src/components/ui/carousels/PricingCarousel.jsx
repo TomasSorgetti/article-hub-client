@@ -9,43 +9,15 @@ import image2 from "../../../assets/images/pricing/3.svg";
 import video3 from "../../../assets/videos/4.mp4";
 import image3 from "../../../assets/images/pricing/4.svg";
 
-const plans = [
-  {
-    id: "68cdd413217f9ea3b63e181e1",
-    name: "Free Plan",
-    price: "$0",
-    items: ["3 Workbenches", "3 Collaborators", "1 API Key", "500 MB Storage"],
-  },
-  {
-    id: "68cdd413217f9ea3b63e181e",
-    name: "Pro Plan",
-    price: "$10",
-    items: ["5 Workbenches", "10 Collaborators", "3 API Keys", "2 GB Storage"],
-  },
-  {
-    id: "68cdd413217f9ea3b63e1821",
-    name: "Premium Plan",
-    price: "$25",
-    items: [
-      "Unlimited Workbenches",
-      "Unlimited Collaborators",
-      "API Access",
-      "10 GB Storage",
-    ],
-  },
-  {
-    id: "68cdd413217f9ea3b63e181e2",
-    name: "Extra Plan",
-    price: "$50",
-    items: ["Unlimited Everything", "Priority Support", "Custom Integrations"],
-  },
-];
+const videos = [video0, video1, video2, video3];
+const images = [image0, image1, image2, image3];
 
-export default function PricingCarousel({ handleChangePlan, loading = false }) {
+export default function PricingCarousel({
+  isAuthenticated,
+  loading = false,
+  plans,
+}) {
   const [activeCard, setActiveCard] = useState(0);
-
-  const videos = [video0, video1, video2, video3];
-  const images = [image0, image1, image2, image3];
 
   const visibleCount = 3;
   const total = plans.length;
@@ -72,7 +44,7 @@ export default function PricingCarousel({ handleChangePlan, loading = false }) {
       >
         {plans.map((plan, i) => (
           <li
-            key={plan.id}
+            key={plan._id}
             className={`cursor-pointer ${
               i === activeCard ? "select-none" : ""
             }`}
@@ -80,22 +52,22 @@ export default function PricingCarousel({ handleChangePlan, loading = false }) {
             onClick={() => handleSelectCard(i)}
           >
             <PricingCard
-              id={plan.id}
+              id={plan._id}
               name={plan.name}
               price={plan.price}
-              items={plan.items}
+              currency={plan.currency}
+              items={plan.featureList}
               isActive={i === activeCard}
               isActualPlan={i === 0}
               video={videos[i]}
               image={images[i]}
-              handleChangePlan={handleChangePlan}
+              isAuthenticated={isAuthenticated}
               loading={loading}
             />
           </li>
         ))}
       </ul>
 
-      {/* Máscaras laterales */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background via-background/70 to-transparent z-10" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background via-background/70 to-transparent z-10" />
     </div>

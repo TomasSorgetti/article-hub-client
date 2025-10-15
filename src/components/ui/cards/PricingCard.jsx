@@ -1,4 +1,7 @@
 import { Check } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { SuscribeToProPlan } from "../../../services/subscriptions";
+import { useState } from "react";
 
 export default function PricingCard({
   id = null,
@@ -6,12 +9,38 @@ export default function PricingCard({
   image,
   name,
   price,
+  currency,
   items = [],
   isActualPlan = false,
   isActive = false,
-  handleChangePlan = () => {},
+  isAuthenticated = false,
   loading = false,
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    if (!isAuthenticated) {
+      navigate("/auth/login");
+    }
+    console.log(isAuthenticated, isActualPlan, isLoading, id, loading);
+    if (isActualPlan || isLoading || !id || loading) return;
+
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await SuscribeToProPlan(id);
+      console.log(data, error);
+      if (data?.data?.url) {
+        window.location.href = data.data.url;
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className={`relative flex flex-col w-[390px] md:w-[366px] sm:w-[91%] sm:max-w-[366px] xs:w-[288px] flex-shrink-0 cursor-pointer snap-center 
@@ -45,7 +74,7 @@ export default function PricingCard({
           {name}
         </h2>
         <p className="mt-2.5 text-64 font-semibold tracking-tight lg:text-5xl md:text-48 sm:text-36 flex items-center">
-          {price} USD
+          {price.monthly} {currency}
           <span className="ml-1 text-base font-medium text-font-primary/70 sm:text-16">
             /monthly
           </span>
@@ -71,7 +100,7 @@ export default function PricingCard({
 
       {/* Botón */}
       <button
-        onClick={() => handleChangePlan(id, isActualPlan)}
+        onClick={handleClick}
         className={`mt-auto h-14 w-full rounded-full bg-white text-black font-bold text-18 flex items-center justify-center border border-white/20 transition-all duration-200 
           hover:border-white/50 hover:bg-opacity-85 sm:!h-10 sm:!text-16 ${
             isActualPlan || loading
