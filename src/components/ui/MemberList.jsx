@@ -1,4 +1,4 @@
-import defaultAvatar from "../../assets/images/default_avatar.png";
+import Avatar from "./Avatar";
 
 export default function MemberList({
   members = [],
@@ -13,20 +13,19 @@ export default function MemberList({
       {visibleMembers.map((member, index) => (
         <li
           key={member.user.id || index}
-          className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-white/20 z-[${index}]"
+          className="z-[${index}]"
           style={{ zIndex: visibleMembers.length - index }}
         >
-          <img
-            src={member.user.avatar || defaultAvatar}
+          <Avatar
+            avatar={member.user.avatar}
             alt={member.user.username}
-            className="w-full h-full object-cover"
-            loading="lazy"
+            className="size-10"
           />
         </li>
       ))}
       {/* Contador de overflow */}
       {showOverflow && overflowCount > 0 && (
-        <li className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-white/20 bg-card flex items-center justify-center text-white text-xs font-bold z-10 relative">
+        <li className="w-10 h-10 rounded-full overflow-hidden ring-1 ring-white/20 bg-card flex items-center justify-center text-white text-xs font-bold z-10 relative">
           <span>+{overflowCount}</span>
         </li>
       )}
