@@ -7,7 +7,7 @@ export default function AuthDropdown() {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { isAdmin, logout } = useAuthStore();
+  const { isAdmin, logout, user } = useAuthStore();
 
   const toggleDropdown = async () => {
     setIsOpen((prev) => !prev);
@@ -32,7 +32,7 @@ export default function AuthDropdown() {
         className="flex items-center gap-2 cursor-pointer"
       >
         <div className="w-8 h-8 rounded-full bg-border"></div>
-        Account
+        {user?.username || "Account"}
       </button>
 
       <ul

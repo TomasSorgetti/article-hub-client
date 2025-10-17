@@ -13,7 +13,6 @@ import VerifyEmailPage from "./pages/auth/VerifyEmailPage";
 
 // User
 import WelcomePage from "./pages/user/WelcomePage";
-import WorkspacePage from "./pages/user/WorkspacePage";
 import MyArticlesPage from "./pages/user/articles/MyArticlesPage";
 import ArticleDetailPage from "./pages/user/articles/ArticleDetailPage";
 import CreateArticlePage from "./pages/user/articles/CreateArticlePage";
@@ -48,8 +47,7 @@ export default function App() {
 
       {/* User private routes */}
       <Route path="/user/welcome" element={<WelcomePage />} />
-      <Route path="/user/workbench/:workbenchId" element={<WorkspacePage />} />
-      <Route path="/user/articles" element={<MyArticlesPage />} />
+      <Route path="/user/articles/:workbenchId" element={<MyArticlesPage />} />
       <Route path="/user/articles/:articleId" element={<ArticleDetailPage />} />
       <Route path="/user/articles/add-new" element={<CreateArticlePage />} />
       <Route

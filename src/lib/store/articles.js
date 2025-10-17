@@ -6,10 +6,10 @@ export const useArticlesStore = create((set) => ({
   loading: false,
   error: null,
 
-  async loadMyArticles() {
+  async loadMyArticles(workbenchId) {
     set((state) => ({ ...state, isLoading: true }));
 
-    const { data, error } = await getMyArticles();
+    const { data, error } = await getMyArticles(workbenchId);
     if (!error) {
       set((state) => ({
         ...state,

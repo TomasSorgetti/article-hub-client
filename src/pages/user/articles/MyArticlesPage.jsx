@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import UserLayout from "../../../layouts/UserLayout";
 import { useArticlesStore } from "../../../lib/store/articles";
 import { useEffect } from "react";
 import ArticlesCard from "../../../components/ui/cards/ArticlesCard";
 
 export default function MyArticlesPage() {
+  const { workbenchId } = useParams();
   const { loading, error, articles, loadMyArticles } = useArticlesStore();
 
   useEffect(() => {
-    if (articles.length === 0) {
-      loadMyArticles();
+    if (articles.length === 0 && workbenchId) {
+      loadMyArticles(workbenchId);
     }
-    // todo=> unsuscribe?
-  }, [loadMyArticles, articles.length]);
+  }, [loadMyArticles, articles.length, workbenchId]);
 
   return (
     <UserLayout title="My Articles Page" description="My Articles Page">
