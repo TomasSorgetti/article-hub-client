@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../lib/store/auth";
 import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
+import Avatar from "./Avatar";
 
 export default function AuthDropdown() {
   const dropdownRef = useRef(null);
@@ -31,7 +32,7 @@ export default function AuthDropdown() {
         onClick={toggleDropdown}
         className="flex items-center gap-2 cursor-pointer"
       >
-        <div className="w-8 h-8 rounded-full bg-border"></div>
+        <Avatar avatar={user?.avatar} alt="Avatar actual" className="size-10" />
         {user?.username || "Account"}
       </button>
 

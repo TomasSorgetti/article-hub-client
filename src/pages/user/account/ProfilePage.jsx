@@ -8,6 +8,7 @@ export default function ProfilePage() {
   const { user, setUser } = useAuthStore();
   const [username, setUsername] = useState("");
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -15,6 +16,18 @@ export default function ProfilePage() {
       setUsername(user.username);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (image) {
+      const previewUrl = URL.createObjectURL(image);
+      setImagePreview(previewUrl);
+    }
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [image, imagePreview]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,13 +43,14 @@ export default function ProfilePage() {
     try {
       const { data, error } = await UpdateProfile(formData);
       if (error) {
-        alert("Error: " + error);
-        return;
+        throw new Error(error);
       }
 
       setUser(data);
+      setImage(null);
+      setImagePreview(null);
     } catch (error) {
-      alert("Error: " + error.message);
+      console.log(error);
     }
   };
 
@@ -53,12 +67,11 @@ export default function ProfilePage() {
           <div className="mb-4">
             <label className="block mb-1">Imagen de perfil:</label>
             <Avatar
-              avatar={user?.avatar}
+              avatar={imagePreview || user?.avatar}
               alt="Avatar actual"
               handleClick={handleAvatarClick}
               className="size-60"
             />
-
             <input
               type="file"
               accept="image/*"
