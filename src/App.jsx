@@ -13,6 +13,12 @@ import VerifyEmailPage from "./pages/auth/VerifyEmailPage";
 
 // User
 import WelcomePage from "./pages/user/WelcomePage";
+import GeneralSettings from "./pages/user/settings/GeneralSettings";
+import ApiKeySettings from "./pages/user/settings/ApiKeySettings";
+import ColaboratorsSettings from "./pages/user/settings/ColaboratorsSettings";
+import IntegrationsSettings from "./pages/user/settings/IntegrationsSettings";
+import WebhooksSettings from "./pages/user/settings/WebhooksSettings";
+
 import MyArticlesPage from "./pages/user/articles/MyArticlesPage";
 import ArticleDetailPage from "./pages/user/articles/ArticleDetailPage";
 import CreateArticlePage from "./pages/user/articles/CreateArticlePage";
@@ -46,7 +52,30 @@ export default function App() {
       <Route path="/auth/verify" element={<VerifyEmailPage />} />
 
       {/* User private routes */}
+      {/* Workbenchs */}
       <Route path="/user/welcome" element={<WelcomePage />} />
+      <Route
+        path="/user/settings/:workbenchId/general"
+        element={<GeneralSettings />}
+      />
+      <Route
+        path="/user/settings/:workbenchId/api-key"
+        element={<ApiKeySettings />}
+      />
+      <Route
+        path="/user/settings/:workbenchId/colaborators"
+        element={<ColaboratorsSettings />}
+      />
+      <Route
+        path="/user/settings/:workbenchId/integrations"
+        element={<IntegrationsSettings />}
+      />
+      <Route
+        path="/user/settings/:workbenchId/webhooks"
+        element={<WebhooksSettings />}
+      />
+
+      {/* Articles */}
       <Route path="/user/articles/:workbenchId" element={<MyArticlesPage />} />
       <Route path="/user/articles/:articleId" element={<ArticleDetailPage />} />
       <Route path="/user/articles/add-new" element={<CreateArticlePage />} />
@@ -55,6 +84,7 @@ export default function App() {
         element={<UpdateArticlePage />}
       />
 
+      {/* Account */}
       <Route path="/user/account/profile" element={<ProfilePage />} />
       <Route path="/user/account/settings" element={<SettingsPage />} />
       <Route path="/user/account/billing" element={<BillingPage />} />
