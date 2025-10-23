@@ -4,6 +4,7 @@ import UserLayout from "../../../layouts/UserLayout";
 import { useArticlesStore } from "../../../lib/store/articles";
 import { useEffect } from "react";
 import ArticlesCard from "../../../components/ui/cards/ArticlesCard";
+import { ArrowLeft, Settings } from "lucide-react";
 
 export default function MyArticlesPage() {
   const { workbenchId } = useParams();
@@ -18,14 +19,39 @@ export default function MyArticlesPage() {
   return (
     <UserLayout title="My Articles Page" description="My Articles Page">
       <main className="mt-32 container mx-auto">
-        <div className="w-full flex justify-between">
-          <h1 className="text-3xl font-bold">My Articles Page</h1>
-          <Link to="/user/articles/add-new">New Article</Link>
+        <div className="w-full flex items-end justify-between">
+          <div>
+            <Link
+              to="/user/welcome"
+              className="flex items-center gap-2 text-font-secondary hover:text-font-primary"
+            >
+              <ArrowLeft />
+              Go back
+            </Link>
+            <h1 className="text-3xl font-bold mt-2">My Articles Page</h1>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link
+              to={`/user/settings/${workbenchId}/general`}
+              className="text-font-secondary flex items-center gap-2 border border-border px-4 py-2 rounded"
+            >
+              <Settings size={18} className="text-font-secondary" />
+              Settings
+            </Link>
+            <Link
+              to="/user/articles/add-new"
+              className="px-4 py-2 rounded bg-white text-background font-semibold"
+            >
+              New Article
+            </Link>
+          </div>
         </div>
+
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {/* {!loading && articles.length === 0 && <p>No articles found.</p>} */}
-        <section className="mt-8 flex flex-wrap gap-6">
+        <section className="mt-16 flex flex-wrap gap-6">
           {articles?.map((article) => (
             <ArticlesCard
               key={article._id}

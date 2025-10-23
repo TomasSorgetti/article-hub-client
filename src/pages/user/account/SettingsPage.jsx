@@ -4,8 +4,13 @@ import UserSettingsCard from "../../../components/ui/cards/UserSettingsCard";
 import UserLayout from "../../../layouts/UserLayout";
 import { useSessionStore } from "../../../lib/store/sessions";
 import SesisonCard from "../../../components/ui/cards/SessionCard";
+import { useAuthStore } from "../../../lib/store/auth";
+import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "../../../hooks/useGoogleLogin";
 
 export default function SettingsPage() {
+  const navigate = useNavigate();
+  const { user, googleLogin } = useAuthStore();
   const { sessions, loadMySessions } = useSessionStore();
 
   useEffect(() => {
@@ -13,6 +18,24 @@ export default function SettingsPage() {
       loadMySessions();
     }
   }, [loadMySessions, sessions]);
+
+  const hasLoginMethod = (provider) =>
+    user?.loginMethods?.some((m) => m.provider === provider);
+
+  // Connect Google Account
+  const { prompt } = useGoogleLogin({
+    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    onSuccess: async ({ credential }) => {
+      const rememberme = false;
+      const { success } = googleLogin({ idToken: credential, rememberme });
+      if (!success) {
+        // todo => set error
+      }
+    },
+    onError: (err) => {
+      console.error("Google login error:", err);
+    },
+  });
 
   return (
     <UserLayout title="Settings Page" description="Settings Page">
@@ -25,26 +48,63 @@ export default function SettingsPage() {
               <li>
                 <UserSettingsCard
                   title="Password"
-                  description="Has seteado una contraseña para la cuenta tomassorgetti456@gmail.com"
-                  href="#"
-                  cta="Change password"
+                  description={
+                    hasLoginMethod("email")
+                      ? `Has seteado una contraseña para la cuenta ${user?.email}`
+                      : "Your password is not set."
+                  }
+                  handleClick={() => {
+                    hasLoginMethod("email")
+                      ? navigate("/user/account/change-password")
+                      : navigate("/user/account/set-password");
+                  }}
+                  cta={
+                    hasLoginMethod("email") ? `Change password` : "Set password"
+                  }
                 />
               </li>
 
               <li>
                 <UserSettingsCard
                   title="Login with Google"
-                  description="Esta cuenta no está vinculada con Google."
-                  href="#"
-                  cta="Connect with Google"
+                  description={
+                    hasLoginMethod("google")
+                      ? `Esta cuenta está vinculada con Google.`
+                      : "Esta cuenta no está vinculada con Google."
+                  }
+                  handleClick={() => {
+                    hasLoginMethod("google")
+                      ? navigate("/user/account/disconnect/google")
+                      : prompt();
+                  }}
+                  cta={
+                    hasLoginMethod("google")
+                      ? `Disconnect with Google`
+                      : "Connect with Google"
+                  }
                 />
               </li>
+
               <li>
                 <UserSettingsCard
                   title="Login with GitHub"
-                  description="Esta cuenta no está vinculada con GitHub."
-                  href="#"
-                  cta="Connect with GitHub"
+                  description={
+                    hasLoginMethod("github")
+                      ? `Esta cuenta está vinculada con GitHub.`
+                      : "Esta cuenta no está vinculada con GitHub."
+                  }
+                  handleClick={() => {
+                    hasLoginMethod("github")
+                      ? navigate("/user/account/disconnect/github")
+                      : () => {
+                          console.log("NOT_IMPLEMENTED");
+                        };
+                  }}
+                  cta={
+                    hasLoginMethod("github")
+                      ? `Disconnect with GitHub`
+                      : "Connect with GitHub"
+                  }
                 />
               </li>
 

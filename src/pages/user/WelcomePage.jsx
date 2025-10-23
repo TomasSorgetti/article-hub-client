@@ -4,6 +4,7 @@ import WorkbenchCardTest from "../../components/ui/cards/WorkbenchCardTest";
 import PublicLayout from "../../layouts/PublicLayout";
 import { useAuthStore } from "../../lib/store/auth";
 
+// todo => when login, redirect to welcome, but workbench is empty. Must return workbenchs in user, or change login and get all workbenchs instead
 export default function WelcomePage() {
   const { user } = useAuthStore();
 

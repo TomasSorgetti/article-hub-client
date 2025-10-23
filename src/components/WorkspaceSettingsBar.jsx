@@ -1,6 +1,13 @@
-import { Settings, Users, KeyRound, Webhook, Waypoints } from "lucide-react";
+import {
+  Settings,
+  Users,
+  KeyRound,
+  Webhook,
+  Waypoints,
+  ArrowLeft,
+} from "lucide-react";
 import SettingsListItem from "./ui/SettingsListItem";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function WorkspaceSettingsBar() {
   const { workbenchId } = useParams();
@@ -8,6 +15,15 @@ export default function WorkspaceSettingsBar() {
   return (
     <aside className="p-4 min-w-60">
       <ul className="flex flex-col gap-4">
+        <li>
+          <Link
+            to={`/user/articles/${workbenchId}`}
+            className="flex items-center gap-2 text-font-secondary hover:text-font-primary"
+          >
+            <ArrowLeft />
+            Go back
+          </Link>
+        </li>
         <li>
           <SettingsListItem
             to={`/user/settings/${workbenchId}/general`}

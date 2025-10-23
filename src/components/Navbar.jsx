@@ -18,7 +18,7 @@ export default function Navbar() {
           <Image src={ArticleHubLogo} alt="article hub logo" />
         </Link>
 
-        <ul className="flex flex-col lg:flex-row lg:space-x-12">
+        <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-12">
           <li>
             <NavigationLink to="/">Home</NavigationLink>
           </li>
@@ -31,6 +31,16 @@ export default function Navbar() {
           <li>
             <NavigationLink to="/docs">Docs</NavigationLink>
           </li>
+          {isAuthenticated && (
+            <li>
+              <Link
+                to="/user/welcome"
+                className="text-font-primary font-semibold cursor-pointer bg-primary px-3 py-2 rounded"
+              >
+                Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
 
         <ul className="flex flex-col lg:flex-row lg:items-center lg:space-x-2">

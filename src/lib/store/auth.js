@@ -85,7 +85,8 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  googleLogin: async ({idToken, rememberme}) => {
+  // todo => if user add google account method to login, and add google avatar (if doesnt allready have one), must update global state
+  googleLogin: async ({ idToken, rememberme }) => {
     try {
       set({ loading: true, error: null });
       const { data, error } = await GoogleSignInUser({ idToken, rememberme });

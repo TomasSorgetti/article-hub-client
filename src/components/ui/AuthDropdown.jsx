@@ -30,8 +30,9 @@ export default function AuthDropdown() {
     <div ref={dropdownRef} className="relative ml-4">
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 cursor-pointer"
+        className="flex items-center gap-2 cursor-pointer text-font-secondary"
       >
+        {/* todo => if user add google account method to login, and add google avatar (if doesnt allready have one), must update global state */}
         <Avatar avatar={user?.avatar} alt="Avatar actual" className="size-10" />
         {user?.username || "Account"}
       </button>
@@ -48,11 +49,7 @@ export default function AuthDropdown() {
             </Link>
           </li>
         )}
-        <li className="text-font-secondary hover:text-font-primary hover:bg-border/20 cursor-pointer">
-          <Link to="/user/welcome" className="block p-2">
-            Dashboard
-          </Link>
-        </li>
+
         <li className="text-font-secondary hover:text-font-primary hover:bg-border/20 cursor-pointer">
           <Link to="/user/account/profile" className="block p-2">
             Profile

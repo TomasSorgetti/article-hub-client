@@ -60,6 +60,7 @@ export default function LoginPage() {
   };
 
   // Google Login
+  // todo=> if user add google account method to login, and add google avatar (if doesnt allready have one), must update global state
   const { prompt } = useGoogleLogin({
     clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
     onSuccess: async ({ credential }) => {
