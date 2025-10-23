@@ -2,6 +2,8 @@
 
 Article Hub is a platform to **create, manage, and consume articles** as a service. The goal is to provide users with an easy-to-use system, featuring subscription plans, a public API, and AI tools to enhance content creation.
 
+<img width="1901" height="858" alt="image" src="https://github.com/user-attachments/assets/404bf8d6-9b4d-48e4-8735-894f58e0a630" />
+
 ## Prerequisites
 
 - Node.js ≥ 18
