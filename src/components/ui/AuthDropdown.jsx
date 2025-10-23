@@ -3,6 +3,7 @@ import { useAuthStore } from "../../lib/store/auth";
 import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
 import Avatar from "./Avatar";
+import { LayoutDashboard, LogOut, Settings, UserPen } from "lucide-react";
 
 export default function AuthDropdown() {
   const dropdownRef = useRef(null);
@@ -44,27 +45,37 @@ export default function AuthDropdown() {
       >
         {isAdmin && (
           <li className=" text-font-secondary hover:text-font-primary hover:bg-border/20 cursor-pointer">
-            <Link to="/admin/dashboard" className="block p-2">
+            <Link to="/admin/dashboard" className="flex items-center gap-6 p-2">
+              <LayoutDashboard size={18} />
               Admin Dashboard
             </Link>
           </li>
         )}
 
         <li className="text-font-secondary hover:text-font-primary hover:bg-border/20 cursor-pointer">
-          <Link to="/user/account/profile" className="block p-2">
+          <Link
+            to="/user/account/profile"
+            className="flex items-center gap-6 p-2"
+          >
+            <UserPen size={18} />
             Profile
           </Link>
         </li>
         <li className="text-font-secondary hover:text-font-primary hover:bg-border/20">
-          <Link to="/user/account/settings" className="block p-2">
+          <Link
+            to="/user/account/settings"
+            className="flex items-center gap-6 p-2"
+          >
+            <Settings size={18} />
             Settings
           </Link>
         </li>
         <li>
           <button
             onClick={handleLogout}
-            className="cursor-pointer p-2 text-red-400 hover:text-red-500 hover:bg-red-400/5 w-full text-left"
+            className="cursor-pointer p-2 text-red-400 hover:text-red-500 hover:bg-red-400/5 w-full text-left flex items-center gap-6"
           >
+            <LogOut size={18} />
             Logout
           </button>
         </li>
