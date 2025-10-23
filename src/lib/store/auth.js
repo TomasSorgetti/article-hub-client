@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { SignInUser, SignOutUser } from "../../services/auth";
+import { GoogleSignInUser, SignInUser, SignOutUser } from "../../services/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -7,6 +7,8 @@ export const useAuthStore = create((set) => ({
   isAuthenticated: !!localStorage.getItem("isAuthenticated"),
   loading: false,
   error: null,
+
+  setUser: (user) => set({ user }),
 
   login: async (credentials) => {
     set({ loading: true, error: null });
@@ -83,5 +85,53 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  setUser: (user) => set({ user }),
+  googleLogin: async ({idToken, rememberme}) => {
+    try {
+      set({ loading: true, error: null });
+      const { data, error } = await GoogleSignInUser({ idToken, rememberme });
+
+      if (error) {
+        set({
+          user: null,
+          error,
+          isAdmin: false,
+          isAuthenticated: false,
+          loading: false,
+        });
+        return { success: false, error };
+      }
+
+      if (!data?.success) {
+        const msg = data?.message || "Login failed";
+        set({
+          user: null,
+          isAdmin: false,
+          error: msg,
+          isAuthenticated: false,
+          loading: false,
+        });
+        return { success: false, error: msg };
+      }
+
+      localStorage.setItem("isAuthenticated", "true");
+
+      set({
+        user: data.data.user,
+        isAdmin: data.data.user.role === "admin",
+        isAuthenticated: true,
+        error: null,
+        loading: false,
+      });
+
+      return { success: true, user: data.data };
+    } catch (err) {
+      set({
+        user: null,
+        error: err?.message || err,
+        isAuthenticated: false,
+        loading: false,
+      });
+      return { success: false, error: err?.message || err };
+    }
+  },
 }));

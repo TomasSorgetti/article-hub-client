@@ -9,7 +9,9 @@ export default function IntegrationsSettings() {
       title="Integrations Settings"
       description="Integrations Settings"
     >
-      <h1>Integrations Settings {workbenchId}</h1>
+      <main className="mt-4 container mx-auto px-4 lg:px-16">
+        <h1>Integrations Settings {workbenchId}</h1>
+      </main>
     </SettingsLayout>
   );
 }

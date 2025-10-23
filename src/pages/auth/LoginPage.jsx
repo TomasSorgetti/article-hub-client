@@ -10,9 +10,10 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
 import { useState } from "react";
 import { useAuthStore } from "../../lib/store/auth";
+import { useGoogleLogin } from "../../hooks/useGoogleLogin";
 
 export default function LoginPage() {
-  const { login, loading } = useAuthStore();
+  const { login, loading, googleLogin } = useAuthStore();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +42,7 @@ export default function LoginPage() {
 
   const handleBlur = () => {};
 
+  // Email Login
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -57,6 +59,21 @@ export default function LoginPage() {
     }
   };
 
+  // Google Login
+  const { prompt } = useGoogleLogin({
+    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    onSuccess: async ({ credential }) => {
+      const { success } = googleLogin({ idToken: credential, rememberme });
+      if (!success) {
+        // todo => set error
+      }
+      navigate(redirect || "/user/welcome");
+    },
+    onError: (err) => {
+      console.error("Google login error:", err);
+    },
+  });
+
   return (
     <PublicLayout title="Login Page" description="Login Page">
       <CustomForm
@@ -70,7 +87,7 @@ export default function LoginPage() {
         </p>
 
         <div className="flex gap-4 items-center w-full">
-          <GoogleLink>Sign in with Google</GoogleLink>
+          <GoogleLink handleClick={prompt}>Sign in with Google</GoogleLink>
           <GithubLink>Sign in with GitHub</GithubLink>
         </div>
 

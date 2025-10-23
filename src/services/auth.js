@@ -14,3 +14,9 @@ export function SignOutUser() {
 export function getProfile() {
   return handleApiRequest(() => privateApi.get(`/users/me`));
 }
+
+export function GoogleSignInUser({ idToken, rememberme }) {
+  return handleApiRequest(() =>
+    privateApi.post(`/auth/google`, { idToken, rememberme })
+  );
+}

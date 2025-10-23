@@ -6,7 +6,9 @@ export default function WebhooksSettings() {
 
   return (
     <SettingsLayout title="Webhooks Settings" description="Webhooks Settings">
-      <h1>Webhooks Settings {workbenchId}</h1>
+      <main className="mt-4 container mx-auto px-4 lg:px-16">
+        <h1>Webhooks Settings {workbenchId}</h1>
+      </main>
     </SettingsLayout>
   );
 }
