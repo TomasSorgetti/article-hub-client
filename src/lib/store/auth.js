@@ -91,6 +91,9 @@ export const useAuthStore = create((set) => ({
       set({ loading: true, error: null });
       const { data, error } = await GoogleSignInUser({ idToken, rememberme });
 
+      console.log("Data: ", data);
+      console.log("Error: ", error);
+
       if (error) {
         set({
           user: null,

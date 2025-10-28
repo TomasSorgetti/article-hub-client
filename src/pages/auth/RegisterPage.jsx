@@ -9,10 +9,12 @@ import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
+import { useAuthStore } from "../../lib/store/auth";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { googleLogin } = useAuthStore();
 
   const searchParams = new URLSearchParams(location.search);
   const redirect = searchParams.get("redirect");
@@ -31,11 +33,20 @@ export default function RegisterPage() {
     }
   };
 
+  const handleGoogleLogin = async ({ credential }) => {
+    const rememberme = false;
+    const { success } = await googleLogin({
+      idToken: credential,
+      rememberme,
+    });
+    if (success) navigate(redirect || "/auth/login");
+  };
+
   return (
     <PublicLayout title="Register Page" description="Register Page">
       <CustomForm
         handleSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-32"
+        className="flex flex-col gap-4 w-full max-w-120 mx-auto mt-32"
       >
         <h1 className="text-3xl font-bold">Sign Up</h1>
         <p className="text-font-secondary">
@@ -43,8 +54,11 @@ export default function RegisterPage() {
           information and customize your account.
         </p>
 
-        <div className="flex gap-4 items-center w-full">
-          <GoogleLink>Sign up with Google</GoogleLink>
+        <div className="flex flex-col gap-4 items-center w-full">
+          <GoogleLink
+            handleSuccess={handleGoogleLogin}
+            handleError={(err) => console.error("Google login error:", err)}
+          />
           <GithubLink>Sign up with GitHub</GithubLink>
         </div>
 

@@ -10,7 +10,6 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
 import { useState } from "react";
 import { useAuthStore } from "../../lib/store/auth";
-import { useGoogleLogin } from "../../hooks/useGoogleLogin";
 
 export default function LoginPage() {
   const { login, loading, googleLogin } = useAuthStore();
@@ -59,27 +58,20 @@ export default function LoginPage() {
     }
   };
 
-  // Google Login
-  // todo=> if user add google account method to login, and add google avatar (if doesnt allready have one), must update global state
-  const { prompt } = useGoogleLogin({
-    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-    onSuccess: async ({ credential }) => {
-      const { success } = googleLogin({ idToken: credential, rememberme });
-      if (!success) {
-        // todo => set error
-      }
-      navigate(redirect || "/user/welcome");
-    },
-    onError: (err) => {
-      console.error("Google login error:", err);
-    },
-  });
+  const handleGoogleLogin = async ({ credential }) => {
+    console.log("ID Token:", credential);
+    const { success } = await googleLogin({
+      idToken: credential,
+      rememberme,
+    });
+    if (success) navigate(redirect || "/user/welcome");
+  };
 
   return (
     <PublicLayout title="Login Page" description="Login Page">
       <CustomForm
         handleSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-[30rem] mx-auto mt-32"
+        className="flex flex-col gap-4 w-full max-w-120 mx-auto mt-32"
       >
         <h1 className="text-3xl font-bold">Sign in</h1>
         <p className="text-font-secondary">
@@ -88,7 +80,10 @@ export default function LoginPage() {
         </p>
 
         <div className="flex gap-4 items-center w-full">
-          <GoogleLink handleClick={prompt}>Sign in with Google</GoogleLink>
+          <GoogleLink
+            handleSuccess={handleGoogleLogin}
+            handleError={(err) => console.error("Google login error:", err)}
+          />
           <GithubLink>Sign in with GitHub</GithubLink>
         </div>
 

@@ -3,18 +3,21 @@ import { createRoot } from "react-dom/client";
 
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import App from "./App.jsx";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import NotificationsProvider from "./providers/NotificationsProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <NotificationsProvider>
+  <BrowserRouter>
+    <AuthProvider>
+      <NotificationsProvider>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
           <App />
-        </NotificationsProvider>
-      </AuthProvider>
-    </BrowserRouter>
+        </GoogleOAuthProvider>
+      </NotificationsProvider>
+    </AuthProvider>
+  </BrowserRouter>
   // </StrictMode>
 );

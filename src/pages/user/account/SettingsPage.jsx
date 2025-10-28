@@ -24,12 +24,14 @@ export default function SettingsPage() {
 
   // Connect Google Account
   const { prompt } = useGoogleLogin({
-    clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
     onSuccess: async ({ credential }) => {
       const rememberme = false;
-      const { success } = googleLogin({ idToken: credential, rememberme });
+      const { success } = await googleLogin({
+        idToken: credential,
+        rememberme,
+      });
       if (!success) {
-        // todo => set error
+        // manejar error
       }
     },
     onError: (err) => {
