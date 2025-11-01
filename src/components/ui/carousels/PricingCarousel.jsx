@@ -32,7 +32,7 @@ export default function PricingCarousel({
   const handleSelectCard = (index) => setActiveCard(index);
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto h-full min-h-[36rem] overflow-hidden py-60">
+    <div className="relative w-full max-w-7xl mx-auto h-full min-h-144 overflow-hidden py-60">
       <ul
         className="flex transition-transform duration-500 ease-out gap-10"
         style={{
@@ -68,8 +68,8 @@ export default function PricingCarousel({
         ))}
       </ul>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-background via-background/70 to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-background via-background/70 to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-40 bg-linear-to-r from-background via-background/70 to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-40 bg-linear-to-l from-background via-background/70 to-transparent z-10" />
     </div>
   );
 }

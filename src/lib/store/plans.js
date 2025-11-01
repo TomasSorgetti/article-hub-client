@@ -19,7 +19,11 @@ export const usePlanStore = create((set) => ({
       }));
     } else {
       // todo => error
-      set((state) => ({ ...state, isLoading: false }));
+      set((state) => ({
+        ...state,
+        isLoading: false,
+        error: error.message || error,
+      }));
     }
   },
 }));

@@ -9,18 +9,18 @@ import Content from "../../../assets/images/home/content.webp";
 export default function HomeBento() {
   return (
     <section className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-      <CustomCard className="min-h-[26.25rem] md:col-span-2 lg:p-12">
-        <h2 className="text-font-primary text-5xl max-w-[40rem]">
+      <CustomCard className="min-h-105 md:col-span-2 lg:p-12">
+        <h2 className="text-font-primary text-5xl max-w-160">
           Retrieve your posts from{" "}
           <span className="text-primary">any website</span>
         </h2>
-        <p className="text-font-secondary text-lg mt-10 max-w-[34rem]">
+        <p className="text-font-secondary text-lg mt-10 max-w-136">
           Generate an API Key and display your articles (portfolios, blogs,
           websites) in JSON with authentication and plan-based limits.
         </p>
       </CustomCard>
 
-      <CustomCard className="min-h-[26.25rem] md:col-span-1 lg:p-12">
+      <CustomCard className="min-h-105 md:col-span-1 lg:p-12">
         <h2 className="text-font-primary text-5xl">
           Collaborative <span className="text-primary">Workspaces</span>
         </h2>
@@ -30,12 +30,12 @@ export default function HomeBento() {
         </p>
       </CustomCard>
 
-      <CustomCard className="min-h-[26.25rem] md:col-span-3 flex justify-between">
+      <CustomCard className="min-h-105 md:col-span-3 flex justify-between">
         <div className="lg:pl-12 lg:py-12">
-          <h2 className="text-font-primary text-5xl max-w-[30rem]">
+          <h2 className="text-font-primary text-5xl max-w-120">
             Content & <span className="text-primary">article management</span>
           </h2>
-          <p className="text-font-secondary text-lg max-w-[33rem] mt-10">
+          <p className="text-font-secondary text-lg max-w-132 mt-10">
             Create, edit, and publish articles with a powerful editor designed
             to structure and share knowledge easily.
           </p>
@@ -48,11 +48,11 @@ export default function HomeBento() {
       </CustomCard>
 
       {/* Three Cards */}
-      <CustomCard className="min-h-[42rem] md:col-span-1">
+      <CustomCard className="min-h-168 md:col-span-1">
         <div className="p-8">
           <Label
             variant="secondary"
-            className="bg-gradient-to-b from-secondary/30 to-secondary/10"
+            className="bg-linearr-to-b from-secondary/30 to-secondary/10"
           >
             Api Key
           </Label>
@@ -67,11 +67,11 @@ export default function HomeBento() {
         <Image src={Flexible} alt="" className="w-full h-full" />
       </CustomCard>
 
-      <CustomCard className="min-h-[42rem] md:col-span-1">
+      <CustomCard className="min-h-168 md:col-span-1">
         <div className="p-8">
           <Label
             variant="tertiary"
-            className="bg-gradient-to-b from-tertiary/30 to-tertiary/10"
+            className="bg-linear-to-b from-tertiary/30 to-tertiary/10"
           >
             Api Key
           </Label>
@@ -84,11 +84,11 @@ export default function HomeBento() {
         <Image src={Simple} alt="" className="w-full h-full" />
       </CustomCard>
 
-      <CustomCard className="min-h-[42rem] md:col-span-1">
+      <CustomCard className="min-h-168 md:col-span-1">
         <div className="p-8">
           <Label
             variant="primary"
-            className="bg-gradient-to-b from-primary/30 to-primary/10"
+            className="bg-linear-to-b from-primary/30 to-primary/10"
           >
             Api Key
           </Label>
