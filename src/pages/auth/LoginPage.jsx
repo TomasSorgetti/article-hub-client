@@ -68,7 +68,10 @@ export default function LoginPage() {
   };
 
   return (
-    <PublicLayout title="Login Page" description="Login Page">
+    <PublicLayout
+      title="Log In | Article Hub"
+      description="Access your Article Hub dashboard to manage your articles, integrations, and analytics — fast, simple, and secure."
+    >
       <CustomForm
         handleSubmit={handleSubmit}
         className="flex flex-col gap-4 w-full max-w-120 mx-auto mt-32"

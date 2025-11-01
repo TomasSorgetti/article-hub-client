@@ -59,7 +59,10 @@ export default function ProfilePage() {
   };
 
   return (
-    <UserLayout title="Profile Page" description="Profile Page">
+    <UserLayout
+      title="Profile | Article Hub – Manage your personal account details"
+      description="View and edit your personal information, update your email, and manage your profile settings for your Article Hub account."
+    >
       <main className="mt-32 container mx-auto">
         <h1>Profile Page</h1>
 

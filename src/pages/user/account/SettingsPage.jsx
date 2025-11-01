@@ -40,7 +40,10 @@ export default function SettingsPage() {
   });
 
   return (
-    <UserLayout title="Settings Page" description="Settings Page">
+    <UserLayout
+      title="Account Settings | Article Hub – Control your preferences and security"
+      description="Manage your personal preferences, security settings, and notifications. Keep your Article Hub account safe and customized to your needs."
+    >
       <main className="container mx-auto px-4 py-32">
         <h1>Settings Page</h1>
         <div className="flex w-full space-x-4 mt-10">

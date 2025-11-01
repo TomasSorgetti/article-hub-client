@@ -45,7 +45,10 @@ export default function BillingSuccessPage() {
     );
 
   return (
-    <UserLayout title="Success">
+    <UserLayout
+      title="Payment Successful | Article Hub – Subscription activated"
+      description="Your payment has been processed successfully and your Article Hub subscription is now active. Enjoy full access to all premium features."
+    >
       <h1>¡Suscripción completada!</h1>
       <p>Tu plan ha sido actualizado correctamente.</p>
     </UserLayout>

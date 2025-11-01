@@ -10,7 +10,10 @@ export default function GeneralSettings() {
   });
 
   return (
-    <SettingsLayout title="General Settings" description="General Settings">
+    <SettingsLayout
+      title="Workspace Settings | Article Hub – Configure your workspace and content setup"
+      description="Update your workspace details, define your content structure, and adjust global settings for your Article Hub environment."
+    >
       <main className="mt-4 container mx-auto px-4 lg:px-16">
         <section>
           <h1 className="sr-only">General Settings {workbenchId}</h1>

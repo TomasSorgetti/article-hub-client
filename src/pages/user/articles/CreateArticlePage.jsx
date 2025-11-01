@@ -62,7 +62,10 @@ export default function CreateArticlePage() {
   };
 
   return (
-    <UserLayout title="Create Article Page" description="Create Article Page">
+    <UserLayout
+      title="New Article | Article Hub – Create and publish new content"
+      description="Write, edit, and publish new articles directly from your Article Hub editor. Create high-quality blog posts and share them instantly through your API integration."
+    >
       <main className="mt-32 container mx-auto">
         <form action="#">
           <div className="w-full flex justify-between">

@@ -16,7 +16,10 @@ export default function PricingPage() {
   }, [plans.length, fetchPlans]);
 
   return (
-    <PublicLayout title="Pricing Page" description="Pricing Page">
+    <PublicLayout
+      title="Pricing Plans | Article Hub – The Blog SaaS for creators and developers"
+      description="Find the right plan for your project. From personal blogs to full API integrations, Article Hub offers flexible and scalable plans built for creators, developers, and teams."
+    >
       <main className="mt-32 container mx-auto">
         <div className="relative text-center z-20 translate-y-20 flex flex-col items-center gap-2">
           <h1 className="text-5xl font-bold max-w-2xl">

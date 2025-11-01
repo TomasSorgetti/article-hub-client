@@ -43,7 +43,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <PublicLayout title="Register Page" description="Register Page">
+    <PublicLayout
+      title="Sign Up | Article Hub – Start your blog in minutes"
+      description="Create your free Article Hub account and start publishing articles with API access. Build your own blog and manage everything from one clean, intuitive platform."
+    >
       <CustomForm
         handleSubmit={handleSubmit}
         className="flex flex-col gap-4 w-full max-w-120 mx-auto mt-32"

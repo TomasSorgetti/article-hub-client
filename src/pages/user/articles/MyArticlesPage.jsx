@@ -17,7 +17,10 @@ export default function MyArticlesPage() {
   }, [loadMyArticles, articles.length, workbenchId]);
 
   return (
-    <UserLayout title="My Articles Page" description="My Articles Page">
+    <UserLayout
+      title="Articles | Article Hub – Manage your blog content in one place"
+      description="View, edit, and organize all your articles from one dashboard. Keep your content structured and ready to publish through your Article Hub workspace."
+    >
       <main className="mt-32 container mx-auto">
         <div className="w-full flex items-end justify-between">
           <div>
