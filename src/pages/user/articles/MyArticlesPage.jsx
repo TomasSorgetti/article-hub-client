@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import UserLayout from "../../../layouts/UserLayout";
 import { useArticlesStore } from "../../../lib/store/articles";
 import { useEffect } from "react";
-import ArticlesCard from "../../../components/ui/cards/ArticlesCard";
+import ArticlePrivateCard from "../../../components/ui/cards/ArticlePrivateCard";
 import { ArrowLeft, Settings } from "lucide-react";
 
 export default function MyArticlesPage() {
@@ -56,12 +56,16 @@ export default function MyArticlesPage() {
         {/* {!loading && articles.length === 0 && <p>No articles found.</p>} */}
         <section className="mt-16 flex flex-wrap gap-6">
           {articles?.map((article) => (
-            <ArticlesCard
+            <ArticlePrivateCard
               key={article._id}
               title={article.title}
               summary={article.summary}
               date={article.createdAt}
               author={article.author}
+              categories={article.categories}
+              slug={article.slug}
+              views={article.views}
+              status={article.status}
             />
           ))}
         </section>
