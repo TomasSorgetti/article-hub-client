@@ -19,6 +19,20 @@ export default function PricingPage() {
     <PublicLayout
       title="Pricing Plans | Article Hub – The Blog SaaS for creators and developers"
       description="Find the right plan for your project. From personal blogs to full API integrations, Article Hub offers flexible and scalable plans built for creators, developers, and teams."
+      canonical="/pricing"
+      structuredData={{
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: "Article Hub Premium Plan",
+        description:
+          "Manage and publish your blog with Article Hub premium features.",
+        brand: { "@type": "Brand", name: "Article Hub" },
+        offers: {
+          "@type": "Offer",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+        },
+      }}
     >
       <main className="mt-32 container mx-auto">
         <div className="relative text-center z-20 translate-y-20 flex flex-col items-center gap-2">

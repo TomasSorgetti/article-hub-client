@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /login
+Disallow: /register
+Disallow: /account
+Disallow: /user
+Disallow: /settings
+Allow: /
+
+Sitemap: https://articlehub.com/sitemap.xml
