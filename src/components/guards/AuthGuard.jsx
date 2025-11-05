@@ -1,0 +1,9 @@
+import { Navigate } from "react-router-dom";
+import { useAuthStore } from "../../lib/store/auth";
+
+export default function AuthGuard({ children }) {
+  const { isAuthenticated, loading } = useAuthStore();
+
+  if (loading) return <div>Loading...</div>;
+  return isAuthenticated ? <Navigate to="/user/welcome" replace /> : children;
+}

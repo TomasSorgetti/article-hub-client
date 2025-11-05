@@ -1,19 +1,19 @@
 import { Helmet } from "react-helmet-async";
 import Navbar from "../components/Navbar";
 
-const BASE_URL = "https://articlehub.com";
+const FRONT_URI = import.meta.env.VITE_FRONT_URI || "http://localhost:5173";
 
 export default function PublicLayout({
   title = "Article Hub",
   description = "Create, manage and share your blog as a SaaS.",
   canonical = "/",
   robots = "index, follow",
-  url = `${BASE_URL}${canonical}`,
+  url = `${FRONT_URI}${canonical}`,
   image = "/ogimage.webp",
   structuredData = null,
   children,
 }) {
-  const ogImage = `${BASE_URL}${image}`;
+  const ogImage = `${FRONT_URI}${image}`;
 
   return (
     <>
