@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import UserBar from "../components/UserBar";
+// import UserBar from "../components/UserBar";
 
 export default function UserLayout({
   title = "ArticleHub",
@@ -11,7 +11,7 @@ export default function UserLayout({
       <title>{title}</title>
       <meta name="description" content={description} />
       <Navbar />
-      <UserBar />
+      {/* <UserBar /> */}
       {children}
       {/* <Footer /> */}
     </>

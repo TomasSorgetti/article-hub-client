@@ -1,9 +1,9 @@
 User-agent: *
-Disallow: /login
-Disallow: /register
-Disallow: /account
+Disallow: /auth/login
+Disallow: /auth/register
+Disallow: /auth/verify
 Disallow: /user
-Disallow: /settings
+Disallow: /admin
 Allow: /
 
 Sitemap: https://articlehub.com/sitemap.xml

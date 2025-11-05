@@ -5,7 +5,7 @@ import {
   MarkAllNotificationsAsRead,
 } from "../../services/notifications";
 
-export const useNotificationsStore = create((set) => ({
+export const useNotificationStore = create((set) => ({
   items: [],
   total: 0,
   loading: false,

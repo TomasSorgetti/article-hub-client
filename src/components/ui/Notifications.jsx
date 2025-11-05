@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import useClickOutside from "../../hooks/useClickOutside";
-import { useNotificationsStore } from "../../lib/store/notifications";
+import { useNotificationStore } from "../../lib/store/notifications";
 import NotificationCard from "./cards/NotificationCard";
 
 export default function Notifications() {
@@ -8,7 +8,7 @@ export default function Notifications() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { items, total, loading, removeNotification, markAllAsRead } =
-    useNotificationsStore();
+    useNotificationStore();
 
   const toggleDropdown = async () => {
     setIsOpen((prev) => !prev);

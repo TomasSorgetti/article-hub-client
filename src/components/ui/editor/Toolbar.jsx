@@ -25,6 +25,7 @@ const Toolbar = ({ onCommand, activeFormats }) => {
         const isActive = activeFormats[command];
         return (
           <button
+            type="button"
             key={command + (value || "")}
             title={title}
             onMouseDown={(e) => {
