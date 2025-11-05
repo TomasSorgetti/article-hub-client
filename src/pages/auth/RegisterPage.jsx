@@ -5,16 +5,17 @@ import EmailIcon from "../../assets/icons/email.svg";
 import PasswordIcon from "../../assets/icons/password.svg";
 import CustomForm from "../../components/ui/forms/CustomForm";
 import GoogleLink from "../../components/ui/buttons/GoogleLink";
-import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
 import { useAuthStore } from "../../lib/store/auth";
+import { useState } from "react";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { googleLogin } = useAuthStore();
+  const [errorResponse, setErrorResponse] = useState("");
 
   const searchParams = new URLSearchParams(location.search);
   const redirect = searchParams.get("redirect");
@@ -33,15 +34,27 @@ export default function RegisterPage() {
     }
   };
 
-  const handleGoogleLogin = async ({ credential }) => {
+  const handleGoogleSuccess = async (tokenResponse) => {
+    const idToken = tokenResponse?.credential;
     const rememberme = false;
-    const { success } = await googleLogin({
-      idToken: credential,
-      rememberme,
-    });
-    if (success) navigate(redirect || "/auth/login");
+
+    if (!idToken) {
+      setErrorResponse("No ID token received from Google");
+      return;
+    }
+
+    const { success } = await googleLogin({ idToken, rememberme });
+    if (success) {
+      navigate(redirect || "/user/welcome");
+    } else {
+      setErrorResponse("Google authentication failed");
+    }
   };
 
+  const handleGoogleError = (err) => {
+    console.error(err);
+    setErrorResponse("Google login error");
+  };
   return (
     <PublicLayout
       title="Sign Up | Article Hub – Start your blog in minutes"
@@ -56,14 +69,11 @@ export default function RegisterPage() {
           We´ll get you up and running so you can verify your personal
           information and customize your account.
         </p>
+        <small className="text-red-500">{errorResponse}</small>
 
-        <div className="flex flex-col gap-4 items-center w-full">
-          <GoogleLink
-            handleSuccess={handleGoogleLogin}
-            handleError={(err) => console.error("Google login error:", err)}
-          />
-          <GithubLink>Sign up with GitHub</GithubLink>
-        </div>
+        <GoogleLink onSuccess={handleGoogleSuccess} onError={handleGoogleError}>
+          Continue with Google
+        </GoogleLink>
 
         <CustomInput
           id="username"

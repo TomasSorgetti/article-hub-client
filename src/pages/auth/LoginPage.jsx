@@ -4,7 +4,6 @@ import EmailIcon from "../../assets/icons/email.svg";
 import PasswordIcon from "../../assets/icons/password.svg";
 import CustomForm from "../../components/ui/forms/CustomForm";
 import GoogleLink from "../../components/ui/buttons/GoogleLink";
-import GithubLink from "../../components/ui/buttons/GithubLink";
 import CustomCheck from "../../components/ui/forms/CustomCheck";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
@@ -58,13 +57,25 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleLogin = async ({ credential }) => {
-    console.log("ID Token:", credential);
-    const { success } = await googleLogin({
-      idToken: credential,
-      rememberme,
-    });
-    if (success) navigate(redirect || "/user/welcome");
+  const handleGoogleSuccess = async (tokenResponse) => {
+    const idToken = tokenResponse?.credential;
+
+    if (!idToken) {
+      setErrorResponse("No ID token received from Google");
+      return;
+    }
+
+    const { success } = await googleLogin({ idToken, rememberme });
+    if (success) {
+      navigate(redirect || "/user/welcome");
+    } else {
+      setErrorResponse("Google authentication failed");
+    }
+  };
+
+  const handleGoogleError = (err) => {
+    console.error(err);
+    setErrorResponse("Google login error");
   };
 
   return (
@@ -82,13 +93,9 @@ export default function LoginPage() {
           information and customize your account.
         </p>
 
-        <div className="flex gap-4 items-center w-full">
-          <GoogleLink
-            handleSuccess={handleGoogleLogin}
-            handleError={(err) => console.error("Google login error:", err)}
-          />
-          <GithubLink>Sign in with GitHub</GithubLink>
-        </div>
+        <GoogleLink onSuccess={handleGoogleSuccess} onError={handleGoogleError}>
+          Continue with Google
+        </GoogleLink>
 
         <small className="text-red-500 text-sm min-h-5">{errorResponse}</small>
 
