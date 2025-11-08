@@ -138,4 +138,9 @@ export const useAuthStore = create((set) => ({
       return { success: false, error: err?.message || err };
     }
   },
+
+  addWorkbench: (workbench) => {
+    // set({ workbenchs })
+    console.log(workbench);
+  },
 }));

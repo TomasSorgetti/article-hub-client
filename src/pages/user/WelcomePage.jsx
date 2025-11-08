@@ -1,12 +1,23 @@
+import { useEffect, useState } from "react";
 import AddNewWorkbenchCard from "../../components/ui/cards/AddNewWorkbenchCard";
 import WorkbenchCard from "../../components/ui/cards/WorkbenchCard";
 import WorkbenchCardTest from "../../components/ui/cards/WorkbenchCardTest";
 import PublicLayout from "../../layouts/PublicLayout";
 import { useAuthStore } from "../../lib/store/auth";
+import AddNewWorkbenchModal from "../../components/ui/NewWorkbenchModal";
+import { useWorkbenchStore } from "../../lib/store/workbench";
 
 // todo => when login, redirect to welcome, but workbench is empty. Must return workbenchs in user, or change login and get all workbenchs instead
 export default function WelcomePage() {
   const { user } = useAuthStore();
+  const { workbenches, loadWorkbenches, createWorkbench } = useWorkbenchStore();
+  const [openNewWorkbench, setOpenNewWorkbench] = useState(false);
+
+  useEffect(() => {
+    if (user && workbenches.length === 0) {
+      loadWorkbenches();
+    }
+  }, [user, workbenches, loadWorkbenches]);
 
   return (
     <PublicLayout
@@ -18,11 +29,12 @@ export default function WelcomePage() {
           Welcome {user?.username}
         </h1>
         <div className="mt-12 flex gap-10 flex-wrap">
-          {user?.workbenches?.map((workbench) => (
+          {workbenches?.map((workbench) => (
             <WorkbenchCardTest
               key={workbench.id}
               id={workbench.id}
               title={workbench.name}
+              description={workbench.description}
               owner={workbench.owner}
               members={workbench.members}
               // role={workbench.role}
@@ -31,7 +43,14 @@ export default function WelcomePage() {
               settings={workbench.settings}
             />
           ))}
-          <AddNewWorkbenchCard />
+          <AddNewWorkbenchCard
+            handleClick={() => setOpenNewWorkbench((prev) => !prev)}
+          />
+          <AddNewWorkbenchModal
+            isOpen={openNewWorkbench}
+            toggleModal={() => setOpenNewWorkbench((prev) => !prev)}
+            createWorkbench={createWorkbench}
+          />
         </div>
       </main>
     </PublicLayout>

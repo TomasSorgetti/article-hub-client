@@ -1,14 +1,25 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SettingsLayout from "../../../layouts/SettingsLayout";
 import { useState } from "react";
+import { useWorkbenchStore } from "../../../lib/store/workbench";
 
 export default function GeneralSettings() {
+  const navigate = useNavigate();
   const { workbenchId } = useParams();
   const [form, setForm] = useState({
     name: "My Workspace",
     description: "asdasdasd asd asdasd",
   });
+  const { deleteWorkbench } = useWorkbenchStore();
 
+  const handleDeleteWorkbench = () => {
+    try {
+      deleteWorkbench(workbenchId);
+      navigate("/user/welcome");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <SettingsLayout
       title="Workspace Settings | Article Hub – Configure your workspace and content setup"
@@ -57,7 +68,9 @@ export default function GeneralSettings() {
         <section className="mt-16">
           <h2 className="text-4xl font-semibold">Danger Zone</h2>
           <div className="w-full mt-6 min-h-60 rounded border border-red-400">
-            <div></div>
+            <div>
+              <button onClick={handleDeleteWorkbench}>Delete Workspace</button>
+            </div>
           </div>
         </section>
       </main>
