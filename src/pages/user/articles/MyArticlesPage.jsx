@@ -43,7 +43,7 @@ export default function MyArticlesPage() {
               Settings
             </Link>
             <Link
-              to="/user/articles/add-new"
+              to={`/user/${workbenchId}/articles/add-new`}
               className="px-4 py-2 rounded bg-white text-background font-semibold"
             >
               New Article
@@ -66,6 +66,7 @@ export default function MyArticlesPage() {
               slug={article.slug}
               views={article.views}
               status={article.status}
+              workbenchId={workbenchId}
             />
           ))}
         </section>

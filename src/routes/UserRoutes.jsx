@@ -33,10 +33,13 @@ const userRoutes = [
   },
   { path: "settings/:workbenchId/webhooks", element: <WebhooksSettings /> },
 
-  { path: "articles/:workbenchId", element: <MyArticlesPage /> },
-  { path: "articles/:articleId", element: <ArticleDetailPage /> },
-  { path: "articles/add-new", element: <CreateArticlePage /> },
-  { path: "articles/update/:articleId", element: <UpdateArticlePage /> },
+  { path: ":workbenchId/articles", element: <MyArticlesPage /> },
+  { path: ":workbenchId/articles/:articleSlug", element: <ArticleDetailPage /> },
+  { path: ":workbenchId/articles/add-new", element: <CreateArticlePage /> },
+  {
+    path: ":workbenchId/articles/update/:articleSlug",
+    element: <UpdateArticlePage />,
+  },
 
   { path: "account/profile", element: <ProfilePage /> },
   { path: "account/settings", element: <SettingsPage /> },

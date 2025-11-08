@@ -4,9 +4,13 @@ import { useCategoriesStore } from "../../../lib/store/categories";
 import UserLayout from "../../../layouts/UserLayout";
 import Editor from "../../../components/ui/editor/Editor";
 import AsideForm from "../../../components/sections/user/articles/AsideForm";
+import { useParams } from "react-router-dom";
+import { useArticlesStore } from "../../../lib/store/articles";
 
 export default function CreateArticlePage() {
+  const { workbenchId } = useParams();
   const { categories, loadMyCategories } = useCategoriesStore();
+  const { createArticle, loading: loadingCreateArticle } = useArticlesStore();
 
   const [form, setForm] = useState({
     title: "",
@@ -58,7 +62,39 @@ export default function CreateArticlePage() {
   };
 
   const handleEditorChange = (html) => {
-    console.log("Contenido:", html);
+    console.log(html);
+
+    setForm({
+      ...form,
+      content: html,
+    });
+  };
+
+  const handleCreateArticle = async (event) => {
+    event.preventDefault();
+    // validate form
+
+    if (!workbenchId) {
+      console.log("workbenchId missing");
+
+      return;
+    }
+
+    const data = { ...form, workbench: workbenchId };
+
+    const { success } = await createArticle(data);
+
+    if (success) {
+      setForm({
+        title: "",
+        content: "",
+        slug: "",
+        tags: "",
+        summary: "",
+        categories: [],
+        state: "published",
+      });
+    }
   };
 
   return (
@@ -67,7 +103,7 @@ export default function CreateArticlePage() {
       description="Write, edit, and publish new articles directly from your Article Hub editor. Create high-quality blog posts and share them instantly through your API integration."
     >
       <main className="mt-32 container mx-auto">
-        <form aria-label="Article creation form">
+        <form onSubmit={handleCreateArticle} aria-label="Article creation form">
           <section className="w-full flex justify-between">
             <header className="w-full flex items-center justify-between lg:w-2/3">
               <h1 className="font-semibold text-3xl">Create Article Page</h1>
@@ -86,7 +122,13 @@ export default function CreateArticlePage() {
               <button
                 type="submit"
                 aria-label="Save article"
-                className="bg-white text-black px-6 py-2 rounded font-bold cursor-pointer"
+                aria-disabled={loadingCreateArticle}
+                disabled={loadingCreateArticle}
+                className={`bg-white text-black px-6 py-2 rounded font-bold ${
+                  loadingCreateArticle
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
+                }`}
               >
                 Save
               </button>
@@ -123,7 +165,7 @@ export default function CreateArticlePage() {
                 className="w-full h-full min-h-[400px]"
               >
                 <Editor
-                  onChange={handleEditorChange}
+                  handleChange={handleEditorChange}
                   placeholder="Write something here..."
                 />
               </div>

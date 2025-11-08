@@ -1,6 +1,11 @@
 import CategorySelector from "../../../ui/forms/CategorySelector";
 
-export default function AsideForm({ categories, form, handleChange, handleToggleCategory }) {
+export default function AsideForm({
+  // categories,
+  form,
+  handleChange,
+  // handleToggleCategory,
+}) {
   return (
     <div>
       <h2 className="font-bold text-2xl">Metadata</h2>
@@ -31,11 +36,11 @@ export default function AsideForm({ categories, form, handleChange, handleToggle
         />
       </div>
       {/* Categories */}
-      <CategorySelector
+      {/* <CategorySelector
         allCategories={categories}
         categories={form.categories}
         handleToggleCategory={handleToggleCategory}
-      />
+      /> */}
 
       {/* Image */}
       <div className="mb-4">

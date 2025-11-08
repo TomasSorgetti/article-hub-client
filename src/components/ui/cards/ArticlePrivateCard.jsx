@@ -10,6 +10,7 @@ export default function ArticlePrivateCard({
   slug,
   views,
   status,
+  workbenchId,
 }) {
   return (
     <div className="w-full max-w-90 flex flex-col border border-border rounded-xl p-6">
@@ -77,7 +78,7 @@ export default function ArticlePrivateCard({
       </div>
 
       <Link
-        to={`/articles/${slug}`}
+        to={`/user/${workbenchId}/articles/${slug}`}
         className="relative mt-4 w-full flex flex-col items-center justify-center font-semibold border border-secondary bg-secondary-bis/10 py-2 overflow-hidden group"
       >
         <span className="group-hover:sr-only">SEO Score: [A+ (92%)]</span>

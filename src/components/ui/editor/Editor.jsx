@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import Toolbar from "./Toolbar";
 import EditableArea from "./EditableArea";
 
-const Editor = ({ placeholder = "Write something here..." }) => {
+const Editor = ({
+  placeholder = "Write something here...",
+  handleChange = () => {},
+}) => {
   const editorRef = useRef(null);
   const [activeFormats, setActiveFormats] = useState({});
 
@@ -45,6 +48,7 @@ const Editor = ({ placeholder = "Write something here..." }) => {
         ref={editorRef}
         onSelectionChange={updateActiveFormats}
         placeholder={placeholder}
+        onInput={handleChange}
       />
     </div>
   );

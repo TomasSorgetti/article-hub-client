@@ -1,5 +1,6 @@
 import MemberList from "../MemberList";
 import video from "../../../assets/videos/3.mp4";
+import { Link } from "react-router-dom";
 
 export default function WorkbenchCardTest({
   id,
@@ -13,8 +14,8 @@ export default function WorkbenchCardTest({
   //   settings,
 }) {
   return (
-    <a
-      href={`/user/articles/${id}`}
+    <Link
+      to={`/user/${id}/articles`}
       className={`relative z-30 w-full max-w-90 group hover:scale-[1.05] hover:z-0 h-66 transition-all duration-300 `}
     >
       <div className="relative z-10 border border-border bg-background/80 flex flex-col items-start w-full h-full cursor-pointer p-4 rounded-2xl group">
@@ -55,6 +56,6 @@ export default function WorkbenchCardTest({
           <div className="bg-circular absolute inset-0 w-full h-full object-cover rounded-[inherit]"></div>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
