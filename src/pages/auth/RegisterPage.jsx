@@ -10,27 +10,67 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import FormButton from "../../components/ui/buttons/FormButton";
 import { useAuthStore } from "../../lib/store/auth";
 import { useState } from "react";
+import {
+  registerValidators,
+  validateRegisterForm,
+} from "../../lib/validators/register.validator";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { googleLogin } = useAuthStore();
+  const { googleLogin, register } = useAuthStore();
   const [errorResponse, setErrorResponse] = useState("");
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const searchParams = new URLSearchParams(location.search);
   const redirect = searchParams.get("redirect");
 
-  const handleChange = () => {
-    console.log("Handle Change");
+  const handleChange = (event) => {
+    setErrorResponse("");
+    setForm({
+      ...form,
+      [event.target.name]: event.target.value,
+    });
   };
-  const handleBlur = () => {
-    console.log("Handle Blur");
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target;
+    const message = registerValidators[name](value);
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: message,
+    }));
   };
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (redirect) {
-      navigate(`/auth/login?redirect=${redirect}`);
+    const { isValid, errors: validationErrors } = validateRegisterForm(form);
+
+    setErrors(validationErrors);
+
+    if (!isValid) {
+      setErrorResponse("Please correct the errors");
+      return;
+    }
+
+    const { success } = await register(form);
+
+    if (success) {
+      if (redirect) {
+        return navigate(`/auth/login?redirect=${redirect}`);
+      }
+      return navigate("/auth/login");
     }
   };
 
@@ -55,6 +95,7 @@ export default function RegisterPage() {
     console.error(err);
     setErrorResponse("Google login error");
   };
+
   return (
     <PublicLayout
       title="Sign Up | Article Hub – Start your blog in minutes"
@@ -84,13 +125,15 @@ export default function RegisterPage() {
 
         <CustomInput
           id="username"
-          type="username"
+          type="text"
           name="username"
           label="Username:"
+          value={form.username}
           icon={UserIcon}
           placeholder="John Doe"
           onChange={handleChange}
           onBlur={handleBlur}
+          error={errors.username}
         />
 
         <CustomInput
@@ -98,10 +141,12 @@ export default function RegisterPage() {
           type="email"
           name="email"
           label="Email:"
+          value={form.email}
           icon={EmailIcon}
           placeholder="abc@xyz.com"
           onChange={handleChange}
           onBlur={handleBlur}
+          error={errors.email}
         />
 
         <CustomInput
@@ -109,10 +154,12 @@ export default function RegisterPage() {
           type="password"
           name="password"
           label="Password:"
+          value={form.password}
           icon={PasswordIcon}
           placeholder="********"
           onChange={handleChange}
           onBlur={handleBlur}
+          error={errors.password}
         />
 
         <CustomCheck id="terms" handleChange={() => {}} className="mt-4">

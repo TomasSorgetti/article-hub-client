@@ -8,13 +8,18 @@ import { ArrowLeft, Settings } from "lucide-react";
 
 export default function MyArticlesPage() {
   const { workbenchId } = useParams();
-  const { loading, articles, loadMyArticles } = useArticlesStore();
+  const { loading, articles, loadMyArticles, clearArticles } =
+    useArticlesStore();
 
   useEffect(() => {
-    if (articles.length === 0 && workbenchId) {
+    if (workbenchId) {
       loadMyArticles(workbenchId);
     }
-  }, [loadMyArticles, articles.length, workbenchId]);
+
+    return () => {
+      clearArticles();
+    };
+  }, [workbenchId, loadMyArticles, clearArticles]);
 
   return (
     <UserLayout

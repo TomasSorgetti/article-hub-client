@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { GoogleSignInUser, SignInUser, SignOutUser } from "../../services/auth";
+import {
+  GoogleSignInUser,
+  SignInUser,
+  SignOutUser,
+  SignUpUser,
+} from "../../services/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -54,6 +59,34 @@ export const useAuthStore = create((set) => ({
         user: null,
         error: err?.message || err,
         isAuthenticated: false,
+        loading: false,
+      });
+      return { success: false, error: err?.message || err };
+    }
+  },
+
+  register: async ({ uername, email, password }) => {
+    set({ loading: true, error: null });
+    try {
+      const { data, error } = await SignUpUser({ uername, email, password });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (!data?.success) {
+        throw new Error(data?.message);
+      }
+
+      set({
+        loading: false,
+        error: null,
+      });
+
+      return { success: true };
+    } catch (err) {
+      set({
+        error: err?.message || err,
         loading: false,
       });
       return { success: false, error: err?.message || err };

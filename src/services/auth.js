@@ -7,6 +7,12 @@ export function SignInUser({ email, password, rememberme }) {
   );
 }
 
+export function SignUpUser({ username, email, password }) {
+  return handleApiRequest(() =>
+    privateApi.post(`/auth/register`, { username, email, password })
+  );
+}
+
 export function SignOutUser() {
   return handleApiRequest(() => privateApi.post(`/auth/logout`));
 }

@@ -6,6 +6,7 @@ Article Hub is a platform to **create, manage, and consume articles** as a servi
 
 ## todo
 
+- [ ] form validations
 - [ ] cuando se elimina un workspace no se actualiza el dom (global store)
 - [ ] cuando se entra al workspace deberia mostrar los posts de ese workspace y no todos
 

@@ -13,7 +13,7 @@ export const useArticlesStore = create((set) => ({
   error: null,
 
   async loadMyArticles(workbenchId) {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
 
     const { data, error } = await getMyArticles(workbenchId);
 
@@ -21,15 +21,15 @@ export const useArticlesStore = create((set) => ({
       set((state) => ({
         ...state,
         articles: data.data.items,
-        isLoading: false,
+        loading: false,
       }));
     } else {
-      set((state) => ({ ...state, error, isLoading: false }));
+      set((state) => ({ ...state, error, loading: false }));
     }
   },
 
   async loadArticle(articleSlug) {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
 
     const { data, error } = await getArticle(articleSlug);
     console.log({ data, error });
@@ -38,15 +38,15 @@ export const useArticlesStore = create((set) => ({
       set((state) => ({
         ...state,
         article: data.data,
-        isLoading: false,
+        loading: false,
       }));
     } else {
-      set((state) => ({ ...state, error, isLoading: false }));
+      set((state) => ({ ...state, error, loading: false }));
     }
   },
 
   async createArticle(article) {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
 
     const { data, error } = await createArticle(article);
 
@@ -54,33 +54,38 @@ export const useArticlesStore = create((set) => ({
       set((state) => ({
         ...state,
         articles: [...state.articles, data.data],
-        isLoading: false,
+        loading: false,
       }));
 
       return { success: true };
     } else {
-      set((state) => ({ ...state, error, isLoading: false }));
+      set((state) => ({ ...state, error, loading: false }));
       return { success: false };
     }
   },
 
   async deleteArticle(articleId) {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
 
     const { error } = await deleteArticle(articleId);
 
     if (!error) {
-
       set((state) => ({
         ...state,
         articles: state.articles.filter((article) => article._id !== articleId),
-        isLoading: false,
+        loading: false,
       }));
 
       return { success: true };
     } else {
-      set((state) => ({ ...state, error, isLoading: false }));
+      set((state) => ({ ...state, error, loading: false }));
       return { success: false };
     }
   },
+
+  clearArticles: () =>
+    set((state) => ({
+      ...state,
+      articles: [],
+    })),
 }));
