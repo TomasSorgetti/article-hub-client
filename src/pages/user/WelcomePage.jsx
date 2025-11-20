@@ -19,6 +19,11 @@ export default function WelcomePage() {
     }
   }, [user, workbenches, loadWorkbenches]);
 
+  const handleCreateWorkbench = (form) => {
+    createWorkbench(form);
+    setOpenNewWorkbench(false);
+  };
+  
   return (
     <PublicLayout
       title="Welcome to Article Hub | Start creating and sharing your content"
@@ -49,7 +54,7 @@ export default function WelcomePage() {
           <AddNewWorkbenchModal
             isOpen={openNewWorkbench}
             toggleModal={() => setOpenNewWorkbench((prev) => !prev)}
-            createWorkbench={createWorkbench}
+            createWorkbench={handleCreateWorkbench}
           />
         </div>
       </main>
