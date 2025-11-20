@@ -1,5 +1,6 @@
-import Navbar from "../components/Navbar";
-// import UserBar from "../components/UserBar";
+import Navbar from "../components/ui/Navbar";
+import Footer from "../components/ui/Footer";
+// import UserBar from "../components/ui/UserBar";
 
 export default function UserLayout({
   title = "ArticleHub",
@@ -12,8 +13,10 @@ export default function UserLayout({
       <meta name="description" content={description} />
       <Navbar />
       {/* <UserBar /> */}
+
       {children}
-      {/* <Footer /> */}
+
+      <Footer />
     </>
   );
 }

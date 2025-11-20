@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import NavigationLink from "./ui/NavigationLink";
-import AuthLink from "./ui/buttons/AuthLink";
-import StarUsLink from "./ui/buttons/StarUsLink";
-import ArticleHubLogo from "../assets/ArticleHub.svg";
-import Image from "./ui/Image";
-import Notifications from "./ui/Notifications";
-import { useAuthStore } from "../lib/store/auth";
-import AuthDropdown from "./ui/AuthDropdown";
+import NavigationLink from "./NavigationLink";
+import AuthLink from "./buttons/AuthLink";
+import StarUsLink from "./buttons/StarUsLink";
+import ArticleHubLogo from "../../assets/ArticleHub.svg";
+import Image from "./Image";
+import Notifications from "./Notifications";
+import { useAuthStore } from "../../lib/store/auth";
+import AuthDropdown from "./AuthDropdown";
 
 export default function Navbar() {
   const { isAuthenticated } = useAuthStore();

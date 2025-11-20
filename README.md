@@ -4,6 +4,11 @@ Article Hub is a platform to **create, manage, and consume articles** as a servi
 
 <img width="1901" height="858" alt="image" src="https://github.com/user-attachments/assets/404bf8d6-9b4d-48e4-8735-894f58e0a630" />
 
+## todo
+
+- [ ] cuando se elimina un workspace no se actualiza el dom (global store)
+- [ ] cuando se entra al workspace deberia mostrar los posts de ese workspace y no todos
+
 ## Prerequisites
 
 - Node.js ≥ 18

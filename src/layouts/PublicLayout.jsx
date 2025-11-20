@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/ui/Navbar";
+import Footer from "../components/ui/Footer";
 
 const FRONT_URI = import.meta.env.VITE_FRONT_URI || "http://localhost:5173";
 
@@ -52,7 +53,10 @@ export default function PublicLayout({
       </Helmet>
 
       <Navbar />
+
       {children}
+
+      <Footer />
     </>
   );
 }

@@ -24,7 +24,7 @@ export default function WelcomePage() {
       title="Welcome to Article Hub | Start creating and sharing your content"
       description="Get started with Article Hub — create your first articles, explore integrations with your website, and discover a smarter way to manage your blog content."
     >
-      <main className="mt-32 container mx-auto">
+      <main className="mt-32 container mx-auto min-h-[60vh]">
         <h1 className="relative z-20 text-3xl font-bold">
           Welcome {user?.username}
         </h1>

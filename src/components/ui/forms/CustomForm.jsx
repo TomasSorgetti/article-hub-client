@@ -1,15 +1,17 @@
+import AnimatedBackground from "../AnimatedBackground";
+
 export default function CustomForm({ children, handleSubmit, className }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`relative border border-border p-8 min-h-[32rem] ${className}`}
+      className="relative z-20 border border-border/40 rounded-2xl overflow-hidden w-full max-w-120 mx-auto mt-32"
     >
-      {children}
-
-      <div className="absolute -top-[1px] -left-[1px] w-5 h-5 border-l border-t border-white"></div>
-      <div className="absolute -bottom-[1px] -left-[1px] w-5 h-5 border-l border-b border-white"></div>
-      <div className="absolute -top-[1px] -right-[1px] w-5 h-5 border-r border-t border-white"></div>
-      <div className="absolute -bottom-[1px] -right-[1px] w-5 h-5 border-r border-b border-white"></div>
+      <AnimatedBackground globalInteractive />
+      <div
+        className={`relative z-20 w-full h-full p-8 rounded-xl ${className}`}
+      >
+        {children}
+      </div>
     </form>
   );
 }

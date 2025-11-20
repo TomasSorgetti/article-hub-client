@@ -9,7 +9,6 @@ import IntegrationsSettings from "../pages/user/settings/IntegrationsSettings";
 import WebhooksSettings from "../pages/user/settings/WebhooksSettings";
 
 import MyArticlesPage from "../pages/user/articles/MyArticlesPage";
-import ArticleDetailPage from "../pages/user/articles/ArticleDetailPage";
 import CreateArticlePage from "../pages/user/articles/CreateArticlePage";
 import UpdateArticlePage from "../pages/user/articles/UpdateArticlePage";
 import ProfilePage from "../pages/user/account/ProfilePage";
@@ -34,7 +33,10 @@ const userRoutes = [
   { path: "settings/:workbenchId/webhooks", element: <WebhooksSettings /> },
 
   { path: ":workbenchId/articles", element: <MyArticlesPage /> },
-  { path: ":workbenchId/articles/:articleSlug", element: <ArticleDetailPage /> },
+  {
+    path: ":workbenchId/articles/:articleSlug",
+    element: <UpdateArticlePage />,
+  },
   { path: ":workbenchId/articles/add-new", element: <CreateArticlePage /> },
   {
     path: ":workbenchId/articles/update/:articleSlug",

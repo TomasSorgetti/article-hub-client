@@ -6,7 +6,7 @@ import {
   Waypoints,
   ArrowLeft,
 } from "lucide-react";
-import SettingsListItem from "./ui/SettingsListItem";
+import SettingsListItem from "./SettingsListItem";
 import { Link, useParams } from "react-router-dom";
 
 export default function WorkspaceSettingsBar() {
@@ -33,7 +33,7 @@ export default function WorkspaceSettingsBar() {
           </SettingsListItem>
         </li>
 
-        <li className="border-t-[1px] border-border pt-2">
+        <li className="border-t border-border pt-2">
           <span className="ml-2 text-font-secondary">Access</span>
           <ul>
             <li>
@@ -46,7 +46,7 @@ export default function WorkspaceSettingsBar() {
             </li>
           </ul>
         </li>
-        <li className="border-t-[1px] border-border pt-2">
+        <li className="border-t border-border pt-2">
           <span className="ml-2 text-font-secondary">Security</span>
           <ul>
             <li>
@@ -60,7 +60,7 @@ export default function WorkspaceSettingsBar() {
           </ul>
         </li>
 
-        <li className="border-t-[1px] border-border pt-2">
+        <li className="border-t border-border pt-2">
           <span className="ml-2 text-font-secondary">Automation</span>
           <ul>
             <li>

@@ -60,20 +60,27 @@ export default function RegisterPage() {
       title="Sign Up | Article Hub – Start your blog in minutes"
       description="Create your free Article Hub account and start publishing articles with API access. Build your own blog and manage everything from one clean, intuitive platform."
     >
-      <CustomForm
-        handleSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full max-w-120 mx-auto mt-32"
-      >
+      <CustomForm handleSubmit={handleSubmit} className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold">Sign Up</h1>
         <p className="text-font-secondary">
           We´ll get you up and running so you can verify your personal
           information and customize your account.
         </p>
-        <small className="text-red-500">{errorResponse}</small>
 
         <GoogleLink onSuccess={handleGoogleSuccess} onError={handleGoogleError}>
           Continue with Google
         </GoogleLink>
+
+        <div className="text-center text-font-secondary mt-2">
+          or
+          <span className="sr-only">sign up with</span>
+        </div>
+
+        <div className="relative">
+          <small className="text-red-500 text-sm absolute w-full text-center">
+            {errorResponse}
+          </small>
+        </div>
 
         <CustomInput
           id="username"
