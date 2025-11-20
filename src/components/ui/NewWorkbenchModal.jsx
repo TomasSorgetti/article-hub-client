@@ -1,4 +1,9 @@
 import { useState } from "react";
+import CustomInput from "../ui/forms/CustomInput";
+import {
+  workbenchValidators,
+  validateWorkbenchForm,
+} from "../../lib/validators/workbench.validator";
 
 export default function AddNewWorkbenchModal({
   isOpen,
@@ -11,6 +16,11 @@ export default function AddNewWorkbenchModal({
     colaborators: [],
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    description: "",
+  });
+
   const handleChange = (event) => {
     setForm({
       ...form,
@@ -18,8 +28,25 @@ export default function AddNewWorkbenchModal({
     });
   };
 
+  const handleBlur = (event) => {
+    const { name, value } = event.target;
+    const message = workbenchValidators[name]?.(value) || "";
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: message,
+    }));
+  };
+
   const handleCreateWorkbench = async (event) => {
     event.preventDefault();
+
+    const { isValid, errors: newErrors } = validateWorkbenchForm(form);
+
+    setErrors(newErrors);
+
+    if (!isValid) return;
+
     createWorkbench(form);
   };
 
@@ -52,39 +79,35 @@ export default function AddNewWorkbenchModal({
             information and customize your account
           </p>
 
-          <div>
-            <label htmlFor="name" className="font-semibold">
-              Name:
-            </label>
-            <input
-              id="name"
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="My Workbench"
-              className="border rounded border-border h-12 w-full p-2 text-font-secondary"
-            />
-          </div>
-          <div>
-            <label htmlFor="description" className="font-semibold">
-              Description:
-            </label>
-            <textarea
-              id="description"
-              type="text"
-              name="description"
-              value={form.description}
-              onChange={handleChange}
-              placeholder="My Workbench"
-              className="border rounded border-border h-32 w-full p-2 text-font-secondary resize-none"
-            />
-          </div>
+          <CustomInput
+            id="name"
+            type="text"
+            name="name"
+            label="Name:"
+            value={form.name}
+            placeholder="My Workbench"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.name}
+          />
+
+          <CustomInput
+            id="description"
+            type="textarea"
+            name="description"
+            label="Description:"
+            value={form.description}
+            placeholder="Workbench description..."
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.description}
+          />
 
           <span role="heading" className="font-semibold text-2xl">
             Add Colaborators
           </span>
 
+          {/* todo -> add colaborators */}
           <div className="mt-4">
             <label htmlFor="search" className="sr-only">
               search colaborators
@@ -93,6 +116,7 @@ export default function AddNewWorkbenchModal({
               id="search"
               type="text"
               name="search"
+              value={""}
               placeholder="Search Colaborators..."
               className="border rounded border-border h-12 w-full p-2 text-font-secondary"
             />
