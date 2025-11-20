@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import UserLayout from "../../../layouts/UserLayout";
 import { useArticlesStore } from "../../../lib/store/articles";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCategoriesStore } from "../../../lib/store/categories";
 import ArticleSelector from "../../../components/ui/forms/ArticleSelector";
 import Editor from "../../../components/ui/editor/Editor";
 import AsideForm from "../../../components/sections/user/articles/AsideForm";
+import { Trash } from "lucide-react";
 
 export default function UpdateArticlePage() {
-  const { articleSlug } = useParams();
+  const navigate = useNavigate();
+  const { articleSlug, workbenchId } = useParams();
   const {
     article,
     loadArticle,
     loading: loadingUpdateArticle,
+    deleteArticle,
   } = useArticlesStore();
   const { categories, loadMyCategories } = useCategoriesStore();
 
@@ -96,6 +99,14 @@ export default function UpdateArticlePage() {
 
   const handleUpdateArticle = (event) => {
     event.preventDefault();
+    // todo update
+  };
+
+  const handleDeleteArticle = async (event) => {
+    event.preventDefault();
+    const { success } = await deleteArticle(article._id);
+
+    if (success) navigate(`/user/${workbenchId}/articles`);
   };
 
   return (
@@ -107,7 +118,7 @@ export default function UpdateArticlePage() {
         article.title || "Article"
       }" in Article Hub. Update its content, tags, and settings, then republish instantly through your API integration.`}
     >
-      <main className="mt-32 container mx-auto">
+      <main className="my-32 container mx-auto">
         <form onSubmit={handleUpdateArticle} aria-label="Article creation form">
           <section className="w-full flex justify-between">
             <header className="w-full flex items-center justify-between lg:w-2/3">
@@ -136,6 +147,14 @@ export default function UpdateArticlePage() {
                 }`}
               >
                 Save
+              </button>
+              <button
+                type="button"
+                aria-label="Delete article"
+                onClick={handleDeleteArticle}
+                className="cursor-pointer"
+              >
+                <Trash className="w-6 h-6 text-red-500" />
               </button>
             </div>
           </section>

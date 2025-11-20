@@ -64,15 +64,16 @@ export const useArticlesStore = create((set) => ({
     }
   },
 
-  async deleteArticle(article) {
+  async deleteArticle(articleId) {
     set((state) => ({ ...state, isLoading: true }));
 
-    const { data, error } = await deleteArticle(article);
+    const { error } = await deleteArticle(articleId);
 
     if (!error) {
+
       set((state) => ({
         ...state,
-        articles: state.articles.filter((a) => a._id !== data.data._id),
+        articles: state.articles.filter((article) => article._id !== articleId),
         isLoading: false,
       }));
 

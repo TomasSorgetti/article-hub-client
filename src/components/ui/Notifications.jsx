@@ -20,6 +20,8 @@ export default function Notifications() {
 
   useClickOutside(dropdownRef, () => setIsOpen(false));
 
+  console.log({ items, total, loading });
+
   return (
     <div ref={dropdownRef} className="relative">
       <button

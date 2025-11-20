@@ -12,7 +12,7 @@ export const useNotificationStore = create((set) => ({
   error: null,
 
   fetchNotifications: async () => {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
     const { data, error } = await GetMyNotifications();
 
     if (!error) {
@@ -20,10 +20,10 @@ export const useNotificationStore = create((set) => ({
         ...state,
         items: data.data.items,
         total: data.data.total,
-        isLoading: false,
+        loading: false,
       }));
     } else {
-      set((state) => ({ ...state, isLoading: false }));
+      set((state) => ({ ...state, loading: false }));
     }
   },
 
@@ -35,7 +35,7 @@ export const useNotificationStore = create((set) => ({
   },
 
   removeNotification: async (id) => {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
 
     const { error } = await DeleteNotification(id);
 
@@ -43,20 +43,20 @@ export const useNotificationStore = create((set) => ({
       set((state) => ({
         ...state,
         items: state.items.filter((item) => item._id !== id),
-        total: state.total - 1,
-        isLoading: false,
+        total: state.total > 0 ? state.total - 1 : 0,
+        loading: false,
       }));
     } else {
       set((state) => ({
         ...state,
-        isLoading: false,
+        loading: false,
         error: error.message || error,
       }));
     }
   },
 
   markAllAsRead: async () => {
-    set((state) => ({ ...state, isLoading: true }));
+    set((state) => ({ ...state, loading: true }));
     const { error } = await MarkAllNotificationsAsRead();
 
     if (!error) {
@@ -64,12 +64,12 @@ export const useNotificationStore = create((set) => ({
         ...state,
         items: state.items.map((item) => ({ ...item, read: true })),
         total: 0,
-        isLoading: false,
+        loading: false,
       }));
     } else {
       set((state) => ({
         ...state,
-        isLoading: false,
+        loading: false,
         error: error.message || error,
       }));
     }

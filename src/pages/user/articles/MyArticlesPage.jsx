@@ -8,7 +8,7 @@ import { ArrowLeft, Settings } from "lucide-react";
 
 export default function MyArticlesPage() {
   const { workbenchId } = useParams();
-  const { loading, error, articles, loadMyArticles } = useArticlesStore();
+  const { loading, articles, loadMyArticles } = useArticlesStore();
 
   useEffect(() => {
     if (articles.length === 0 && workbenchId) {
@@ -52,8 +52,9 @@ export default function MyArticlesPage() {
         </div>
 
         {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
-        {/* {!loading && articles.length === 0 && <p>No articles found.</p>} */}
+        {!loading && articles.length === 0 && (
+          <p className="mt-20 text-font-secondary">No articles found.</p>
+        )}
         <section className="mt-16 flex flex-wrap gap-6">
           {articles?.map((article) => (
             <ArticlePrivateCard
