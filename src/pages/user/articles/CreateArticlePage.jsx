@@ -105,7 +105,7 @@ export default function CreateArticlePage() {
       title="New Article | Article Hub – Create and publish new content"
       description="Write, edit, and publish new articles directly from your Article Hub editor. Create high-quality blog posts and share them instantly through your API integration."
     >
-      <main className="mt-32 container mx-auto">
+      <main className="my-32 container mx-auto">
         <form onSubmit={handleCreateArticle} aria-label="Article creation form">
           <section className="w-full flex justify-between">
             <header className="w-full flex items-center justify-between lg:w-2/3">

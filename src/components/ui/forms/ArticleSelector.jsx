@@ -1,4 +1,4 @@
-export default function ArticleSelector({ state, handleChange }) {
+export default function ArticleSelector({ state = "published", handleChange }) {
   return (
     <button
       type="button"

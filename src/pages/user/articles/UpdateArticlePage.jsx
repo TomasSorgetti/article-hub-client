@@ -170,6 +170,7 @@ export default function UpdateArticlePage() {
                 className="w-full h-full min-h-[400px]"
               >
                 <Editor
+                  content={form.content}
                   handleChange={handleEditorChange}
                   placeholder="Write something here..."
                 />

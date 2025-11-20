@@ -3,6 +3,7 @@ import Toolbar from "./Toolbar";
 import EditableArea from "./EditableArea";
 
 const Editor = ({
+  content = "",
   placeholder = "Write something here...",
   handleChange = () => {},
 }) => {
@@ -46,6 +47,7 @@ const Editor = ({
       <Toolbar onCommand={exec} activeFormats={activeFormats} />
       <EditableArea
         ref={editorRef}
+        value={content}
         onSelectionChange={updateActiveFormats}
         placeholder={placeholder}
         onInput={handleChange}

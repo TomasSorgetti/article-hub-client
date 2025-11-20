@@ -20,23 +20,24 @@ const setCaretToEnd = (el) => {
 };
 
 const EditableArea = forwardRef(
-  (
-    {
-      initialValue = "",
-      onInput,
-      onSelectionChange,
-      placeholder = "Write something here...",
-    },
-    ref
-  ) => {
+  ({ value = "", onInput, onSelectionChange, placeholder }, ref) => {
     const localRef = useRef(null);
     const targetRef = ref || localRef;
-    const [empty, setEmpty] = useState(isContentEmpty(initialValue));
+    const [empty, setEmpty] = useState(isContentEmpty(value));
 
     useEffect(() => {
       const el = targetRef.current;
       if (!el) return;
-      if (!el.innerHTML) el.innerHTML = initialValue;
+
+      if (el.innerHTML !== value) {
+        el.innerHTML = value || "";
+        setEmpty(isContentEmpty(value));
+      }
+    }, [value, targetRef]);
+
+    useEffect(() => {
+      const el = targetRef.current;
+      if (!el) return;
 
       const handleSelection = () => {
         if (onSelectionChange) onSelectionChange();
@@ -45,14 +46,16 @@ const EditableArea = forwardRef(
       document.addEventListener("selectionchange", handleSelection);
       return () =>
         document.removeEventListener("selectionchange", handleSelection);
-    }, [initialValue, onSelectionChange, targetRef]);
+    }, [onSelectionChange, targetRef]);
 
     const handleInput = () => {
       const el = targetRef.current;
       if (!el) return;
       const html = el.innerHTML;
+
       const nowEmpty = isContentEmpty(html);
       setEmpty(nowEmpty);
+
       if (onInput) onInput(html);
     };
 
