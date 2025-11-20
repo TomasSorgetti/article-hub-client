@@ -51,22 +51,16 @@ export const useWorkbenchStore = create((set) => ({
 
     const { error } = await deleteWorkbench(workbenchId);
 
-    console.log(error);
-
     if (!error) {
       set((state) => ({
         ...state,
         workbenches: state.workbenches.filter(
-          (workbench) => workbench._id !== workbenchId
+          (workbench) => workbench.id !== workbenchId
         ),
         isLoading: false,
       }));
     } else {
       set((state) => ({ ...state, isLoading: false }));
     }
-  },
-
-  removeWorkbench: (workbench) => {
-    console.log("Not implemented", workbench);
   },
 }));
