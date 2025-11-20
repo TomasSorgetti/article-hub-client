@@ -7,6 +7,10 @@ import ArticleSelector from "../../../components/ui/forms/ArticleSelector";
 import Editor from "../../../components/ui/editor/Editor";
 import AsideForm from "../../../components/sections/user/articles/AsideForm";
 import { Trash } from "lucide-react";
+import {
+  articleValidators,
+  validateArticleForm,
+} from "../../../lib/validators/article.validator";
 
 export default function UpdateArticlePage() {
   const navigate = useNavigate();
@@ -27,6 +31,12 @@ export default function UpdateArticlePage() {
     summary: "",
     categories: [],
     state: "published",
+  });
+  const [errors, setErrors] = useState({
+    title: "",
+    slug: "",
+    summary: "",
+    content: "",
   });
 
   useEffect(() => {
@@ -55,11 +65,25 @@ export default function UpdateArticlePage() {
     }
   }, [article]);
 
-  const handleChange = (e) => {
+  const handleChange = (event) => {
+    setErrors({
+      ...errors,
+      [event.target.name]: "",
+    });
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value,
     });
+  };
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target;
+    const message = articleValidators[name]?.(value) || "";
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: message,
+    }));
   };
 
   const toggleState = () => {
@@ -97,9 +121,17 @@ export default function UpdateArticlePage() {
     });
   };
 
-  const handleUpdateArticle = (event) => {
+  const handleUpdateArticle = async (event) => {
     event.preventDefault();
-    // todo update
+
+    const { isValid, errors: newErrors } = validateArticleForm(form);
+    setErrors(newErrors);
+
+    if (!isValid) {
+      return;
+    }
+
+    // TODO update article
   };
 
   const handleDeleteArticle = async (event) => {
@@ -168,19 +200,29 @@ export default function UpdateArticlePage() {
               <h2 id="article-content" className="sr-only">
                 Article Content
               </h2>
-              <label htmlFor="title" className="sr-only">
-                Article Title
-              </label>
-              <input
-                id="title"
-                type="text"
-                placeholder="Complete the title"
-                name="title"
-                onChange={handleChange}
-                value={form.title}
-                aria-required="true"
-                className="border-b border-border h-12 w-full mb-10 p-2"
-              />
+              <div className="relative mb-10">
+                <label htmlFor="title" className="sr-only">
+                  Article Title
+                </label>
+                <input
+                  id="title"
+                  type="text"
+                  placeholder="Complete the title"
+                  name="title"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={form.title}
+                  aria-required="true"
+                  className={`border-b h-12 w-full p-2 ${
+                    errors.title ? "border-red-500" : "border-border"
+                  }`}
+                />
+                {errors.title && (
+                  <p className="text-red-500 text-sm absolute -bottom-6 left-0">
+                    {errors.title}
+                  </p>
+                )}
+              </div>
 
               {/* Text Editor */}
               <div
@@ -190,7 +232,9 @@ export default function UpdateArticlePage() {
               >
                 <Editor
                   content={form.content}
+                  handleBlur={handleBlur}
                   handleChange={handleEditorChange}
+                  error={errors.content}
                   placeholder="Write something here..."
                 />
               </div>
@@ -201,6 +245,8 @@ export default function UpdateArticlePage() {
               <AsideForm
                 categories={categories}
                 form={form}
+                errors={errors}
+                handleBlur={handleBlur}
                 handleChange={handleChange}
                 handleToggleCategory={handleToggleCategory}
               />

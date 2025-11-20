@@ -20,7 +20,7 @@ const setCaretToEnd = (el) => {
 };
 
 const EditableArea = forwardRef(
-  ({ value = "", onInput, onSelectionChange, placeholder }, ref) => {
+  ({ value = "", onInput, onBlur, onSelectionChange, placeholder }, ref) => {
     const localRef = useRef(null);
     const targetRef = ref || localRef;
     const [empty, setEmpty] = useState(isContentEmpty(value));
@@ -84,6 +84,7 @@ const EditableArea = forwardRef(
           suppressContentEditableWarning
           onInput={handleInput}
           onFocus={handleFocus}
+          onBlur={onBlur}
           spellCheck={true}
           className="min-h-[200px] p-4 focus:outline-none prose max-w-none text-left z-0"
           style={{

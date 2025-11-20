@@ -4,8 +4,10 @@ import EditableArea from "./EditableArea";
 
 const Editor = ({
   content = "",
+  error = "",
   placeholder = "Write something here...",
   handleChange = () => {},
+  handleBlur = () => {},
 }) => {
   const editorRef = useRef(null);
   const [activeFormats, setActiveFormats] = useState({});
@@ -42,16 +44,36 @@ const Editor = ({
     setActiveFormats(result);
   };
 
+  const handleEditorBlur = () => {
+    if (!editorRef.current) return;
+    const html = editorRef.current.innerHTML;
+
+    handleBlur({
+      target: {
+        name: "content",
+        value: html,
+      },
+    });
+  };
+
   return (
-    <div className="border border-border rounded-lg shadow-sm w-full h-full overflow-hidden">
-      <Toolbar onCommand={exec} activeFormats={activeFormats} />
-      <EditableArea
-        ref={editorRef}
-        value={content}
-        onSelectionChange={updateActiveFormats}
-        placeholder={placeholder}
-        onInput={handleChange}
-      />
+    <div className="relative w-full h-full">
+      <div className="border border-border rounded-lg shadow-sm w-full h-full overflow-hidden">
+        <Toolbar onCommand={exec} activeFormats={activeFormats} />
+        <EditableArea
+          ref={editorRef}
+          value={content}
+          onSelectionChange={updateActiveFormats}
+          placeholder={placeholder}
+          onInput={handleChange}
+          onBlur={handleEditorBlur}
+        />
+      </div>
+      {error && (
+        <p className="text-red-500 text-sm absolute -bottom-6 left-0">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

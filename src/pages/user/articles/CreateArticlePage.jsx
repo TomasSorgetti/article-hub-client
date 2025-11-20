@@ -6,6 +6,10 @@ import Editor from "../../../components/ui/editor/Editor";
 import AsideForm from "../../../components/sections/user/articles/AsideForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { useArticlesStore } from "../../../lib/store/articles";
+import {
+  articleValidators,
+  validateArticleForm,
+} from "../../../lib/validators/article.validator";
 
 export default function CreateArticlePage() {
   const navigate = useNavigate();
@@ -23,6 +27,13 @@ export default function CreateArticlePage() {
     state: "published",
   });
 
+  const [errors, setErrors] = useState({
+    title: "",
+    slug: "",
+    summary: "",
+    content: "",
+  });
+
   useEffect(() => {
     if (categories.length === 0) {
       loadMyCategories();
@@ -34,6 +45,16 @@ export default function CreateArticlePage() {
       ...form,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const message = articleValidators[name]?.(value) || "";
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: message,
+    }));
   };
 
   const toggleState = () => {
@@ -63,8 +84,6 @@ export default function CreateArticlePage() {
   };
 
   const handleEditorChange = (html) => {
-    console.log(html);
-
     setForm({
       ...form,
       content: html,
@@ -73,11 +92,15 @@ export default function CreateArticlePage() {
 
   const handleCreateArticle = async (event) => {
     event.preventDefault();
-    // validate form
+
+    const { isValid, errors: newErrors } = validateArticleForm(form);
+    setErrors(newErrors);
+
+    if (!isValid) {
+      return;
+    }
 
     if (!workbenchId) {
-      console.log("workbenchId missing");
-
       return;
     }
 
@@ -147,19 +170,29 @@ export default function CreateArticlePage() {
               <h2 id="article-content" className="sr-only">
                 Article Content
               </h2>
-              <label htmlFor="title" className="sr-only">
-                Article Title
-              </label>
-              <input
-                id="title"
-                type="text"
-                placeholder="Complete the title"
-                name="title"
-                onChange={handleChange}
-                value={form.title}
-                aria-required="true"
-                className="border-b border-border h-12 w-full mb-10 p-2"
-              />
+              <div className="relative mb-10">
+                <label htmlFor="title" className="sr-only">
+                  Article Title
+                </label>
+                <input
+                  id="title"
+                  type="text"
+                  placeholder="Complete the title"
+                  name="title"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={form.title}
+                  aria-required="true"
+                  className={`border-b h-12 w-full p-2 ${
+                    errors.title ? "border-red-500" : "border-border"
+                  }`}
+                />
+                {errors.title && (
+                  <p className="text-red-500 text-sm absolute -bottom-6 left-0">
+                    {errors.title}
+                  </p>
+                )}
+              </div>
 
               {/* Text Editor */}
               <div
@@ -168,7 +201,9 @@ export default function CreateArticlePage() {
                 className="w-full h-full min-h-[400px]"
               >
                 <Editor
+                  handleBlur={handleBlur}
                   handleChange={handleEditorChange}
+                  error={errors.content}
                   placeholder="Write something here..."
                 />
               </div>
@@ -179,6 +214,8 @@ export default function CreateArticlePage() {
               <AsideForm
                 categories={categories}
                 form={form}
+                errors={errors}
+                handleBlur={handleBlur}
                 handleChange={handleChange}
                 handleToggleCategory={handleToggleCategory}
               />
