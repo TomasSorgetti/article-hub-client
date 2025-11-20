@@ -4,10 +4,11 @@ import { useCategoriesStore } from "../../../lib/store/categories";
 import UserLayout from "../../../layouts/UserLayout";
 import Editor from "../../../components/ui/editor/Editor";
 import AsideForm from "../../../components/sections/user/articles/AsideForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useArticlesStore } from "../../../lib/store/articles";
 
 export default function CreateArticlePage() {
+  const navigate = useNavigate();
   const { workbenchId } = useParams();
   const { categories, loadMyCategories } = useCategoriesStore();
   const { createArticle, loading: loadingCreateArticle } = useArticlesStore();
@@ -94,6 +95,8 @@ export default function CreateArticlePage() {
         categories: [],
         state: "published",
       });
+
+      navigate(`/user/${workbenchId}/articles`);
     }
   };
 
