@@ -55,13 +55,13 @@ export default function UpdateArticlePage() {
   useEffect(() => {
     if (article) {
       setForm({
-        title: article.title,
-        content: article.content,
-        slug: article.slug,
-        tags: article.tags,
-        summary: article.summary,
-        categories: article.categories,
-        state: article.state,
+        title: article.title || "",
+        content: article.content || "",
+        slug: article.slug || "",
+        tags: article.tags || "",
+        summary: article.summary || "",
+        categories: article.categories || [],
+        state: article.state || "published",
       });
     }
   }, [article]);

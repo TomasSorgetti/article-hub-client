@@ -4,11 +4,71 @@ Article Hub is a platform to **create, manage, and consume articles** as a servi
 
 <img width="1901" height="858" alt="image" src="https://github.com/user-attachments/assets/404bf8d6-9b4d-48e4-8735-894f58e0a630" />
 
+## Features
+
+- **Authentication**
+  - **Login**
+    - [x] Login with email
+    - [x] Login with Google
+  - **Register**
+    - [x] Register with Google
+    - [ ] Register with email
+    - [ ] Verify email
+    - [x] Validation inputs
+  - **Sessions**
+    - [x] List (bug: multiple sessions are created)
+    - [ ] Delete
+  - [x] Logout
+  - [x] Add multiple login methods (email & google simultaneously)
+  - [ ] 2FA
+- **Profile**
+  - [x] Update avatar
+  - [x] Update username (bug: when update username, the avatar is not rendered)
+- **Workbenchs**
+  - [x] List
+  - [x] Create (only name & description)
+  - [ ] Update
+  - [x] Delete (no confirmation modal)
+  - **Validations**
+    - [x] Create
+    - [ ] Update
+- **Articles**
+  - [x] List
+  - [x] Create (only title, content, slug & summary)
+  - [x] Update (only title, content, slug & summary)
+  - [x] Delete (no confirmation modal)
+  - **Validations**
+    - [x] Create
+    - [x] Update
+- **Notifications**
+  - [x] Realtime
+  - [x] List
+  - [x] Mark as read (all when open dropdown)
+  - [x] Delete
+  - [x] Create (when article is created, deleted or updated)
+- **Admin Blog**
+  - [ ] List
+  - [ ] Create
+  - [ ] Update
+  - [ ] Delete
+- **Subscriptions**
+  - [x] List (price page)
+  - [ ] Create
+  - [ ] Update
+  - [ ] Delete
+  - [ ] Cancel
+  - [ ] Suscribe
+- **Routing**
+  - [x] Admin guard
+  - [x] User guard
+  - [x] Public guard
+
 ## todo
 
-- [ ] form validations
+- [x] form validations
 - [ ] cuando se elimina un workspace no se actualiza el dom (global store)
-- [ ] cuando se entra al workspace deberia mostrar los posts de ese workspace y no todos
+- [x] cuando se entra al workspace deberia mostrar los posts de ese workspace y no todos
+- [ ] cuando se hace update del nombre de usuario, se borra la imagen del dom
 
 ## Prerequisites
 

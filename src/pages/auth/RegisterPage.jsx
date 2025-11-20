@@ -101,83 +101,88 @@ export default function RegisterPage() {
       title="Sign Up | Article Hub – Start your blog in minutes"
       description="Create your free Article Hub account and start publishing articles with API access. Build your own blog and manage everything from one clean, intuitive platform."
     >
-      <CustomForm handleSubmit={handleSubmit} className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold">Sign Up</h1>
-        <p className="text-font-secondary">
-          We´ll get you up and running so you can verify your personal
-          information and customize your account.
-        </p>
+      <main className="my-32">
+        <CustomForm handleSubmit={handleSubmit} className="flex flex-col gap-4">
+          <h1 className="text-3xl font-bold">Sign Up</h1>
+          <p className="text-font-secondary">
+            We´ll get you up and running so you can verify your personal
+            information and customize your account.
+          </p>
 
-        <GoogleLink onSuccess={handleGoogleSuccess} onError={handleGoogleError}>
-          Continue with Google
-        </GoogleLink>
-
-        <div className="text-center text-font-secondary mt-2">
-          or
-          <span className="sr-only">sign up with</span>
-        </div>
-
-        <div className="relative">
-          <small className="text-red-500 text-sm absolute w-full text-center">
-            {errorResponse}
-          </small>
-        </div>
-
-        <CustomInput
-          id="username"
-          type="text"
-          name="username"
-          label="Username:"
-          value={form.username}
-          icon={UserIcon}
-          placeholder="John Doe"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.username}
-        />
-
-        <CustomInput
-          id="email"
-          type="email"
-          name="email"
-          label="Email:"
-          value={form.email}
-          icon={EmailIcon}
-          placeholder="abc@xyz.com"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.email}
-        />
-
-        <CustomInput
-          id="password"
-          type="password"
-          name="password"
-          label="Password:"
-          value={form.password}
-          icon={PasswordIcon}
-          placeholder="********"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={errors.password}
-        />
-
-        <CustomCheck id="terms" handleChange={() => {}} className="mt-4">
-          Acept terms and conditions
-        </CustomCheck>
-
-        <FormButton className="mt-4">Sign Up</FormButton>
-
-        <small className="text-base text-center mt-4">
-          Allready have an account?{" "}
-          <NavLink
-            to={redirect ? `/auth/login?redirect=${redirect}` : "/auth/login"}
-            className="text-primary hover:underline"
+          <GoogleLink
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
           >
-            Login here
-          </NavLink>
-        </small>
-      </CustomForm>
+            Continue with Google
+          </GoogleLink>
+
+          <div className="text-center text-font-secondary mt-2">
+            or
+            <span className="sr-only">sign up with</span>
+          </div>
+
+          <div className="relative">
+            <small className="text-red-500 text-sm absolute w-full text-center">
+              {errorResponse}
+            </small>
+          </div>
+
+          <CustomInput
+            id="username"
+            type="text"
+            name="username"
+            label="Username:"
+            value={form.username}
+            icon={UserIcon}
+            placeholder="John Doe"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.username}
+          />
+
+          <CustomInput
+            id="email"
+            type="email"
+            name="email"
+            label="Email:"
+            value={form.email}
+            icon={EmailIcon}
+            placeholder="abc@xyz.com"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.email}
+          />
+
+          <CustomInput
+            id="password"
+            type="password"
+            name="password"
+            label="Password:"
+            value={form.password}
+            icon={PasswordIcon}
+            placeholder="********"
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={errors.password}
+          />
+
+          <CustomCheck id="terms" handleChange={() => {}} className="mt-4">
+            Acept terms and conditions
+          </CustomCheck>
+
+          <FormButton className="mt-4">Sign Up</FormButton>
+
+          <small className="text-base text-center mt-4">
+            Allready have an account?{" "}
+            <NavLink
+              to={redirect ? `/auth/login?redirect=${redirect}` : "/auth/login"}
+              className="text-primary hover:underline"
+            >
+              Login here
+            </NavLink>
+          </small>
+        </CustomForm>
+      </main>
     </PublicLayout>
   );
 }

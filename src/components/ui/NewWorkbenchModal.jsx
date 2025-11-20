@@ -116,7 +116,6 @@ export default function AddNewWorkbenchModal({
               id="search"
               type="text"
               name="search"
-              value={""}
               placeholder="Search Colaborators..."
               className="border rounded border-border h-12 w-full p-2 text-font-secondary"
             />
