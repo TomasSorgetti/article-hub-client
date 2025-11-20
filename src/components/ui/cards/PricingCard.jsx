@@ -43,8 +43,8 @@ export default function PricingCard({
 
   return (
     <div
-      className={`relative flex flex-col w-[390px] md:w-[366px] sm:w-[91%] sm:max-w-[366px] xs:w-[288px] flex-shrink-0 cursor-pointer snap-center 
-      rounded-[24px] border-white/10 p-8 transition-all duration-200 h-[490px] ${
+      className={`relative flex flex-col w-[390px] md:w-[366px] sm:w-[91%] sm:max-w-[366px] xs:w-[288px] shrink-0 cursor-pointer snap-center 
+      rounded-3xl border-white/10 p-8 transition-all duration-200 h-[490px] ${
         isActive ? "border-2" : "border"
       }`}
     >
@@ -83,7 +83,7 @@ export default function PricingCard({
           For individuals and teams getting started.
         </p>
 
-        <div className="w-full h-[1px] mt-6 bg-white/10"></div>
+        <div className="w-full h-px mt-6 bg-white/10"></div>
 
         <ul className="mt-6 flex flex-col gap-y-4 sm:mt-4 sm:gap-y-3 lg:mt-8">
           {items.map((item) => (
@@ -102,7 +102,7 @@ export default function PricingCard({
       <button
         onClick={handleClick}
         className={`mt-auto h-14 w-full rounded-full bg-white text-black font-bold text-18 flex items-center justify-center border border-white/20 transition-all duration-200 
-          hover:border-white/50 hover:bg-opacity-85 sm:!h-10 sm:!text-16 ${
+          hover:border-white/50 hover:bg-opacity-85 sm:h-10 sm:text-16 ${
             isActualPlan || loading
               ? "cursor-not-allowed opacity-80"
               : "cursor-pointer"

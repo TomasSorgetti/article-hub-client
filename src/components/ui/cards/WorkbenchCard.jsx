@@ -14,7 +14,7 @@ export default function WorkbenchCard({
   return (
     <a
       href={`/user/workbench/${id}`}
-      className={`relative flex flex-col items-start w-full max-w-[22.5rem] h-[12rem] card-bg cursor-pointer p-4 rounded-2xl hover:shadow-lg hover:shadow-card ${
+      className={`relative flex flex-col items-start w-full max-w-90 h-48 card-bg cursor-pointer p-4 rounded-2xl hover:shadow-lg hover:shadow-card ${
         isArchived ? "opacity-50" : ""
       }`}
     >

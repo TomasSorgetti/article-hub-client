@@ -4,7 +4,7 @@ export default function CategorySelector({
   allCategories,
   categories,
   handleRemoveCategory = () => {},
-  handleToggleCategory = () => {},
+  // handleToggleCategory = () => {},
   handleAddCategory = () => {},
 }) {
   const [newCategory, setNewCategory] = useState("");
