@@ -3,6 +3,7 @@ import {
   getMyArticles,
   getArticle,
   createArticle,
+  updateArticle,
   deleteArticle,
 } from "../../services/articles";
 
@@ -32,7 +33,6 @@ export const useArticlesStore = create((set) => ({
     set((state) => ({ ...state, loading: true }));
 
     const { data, error } = await getArticle(articleSlug);
-    console.log({ data, error });
 
     if (!error) {
       set((state) => ({
@@ -54,6 +54,27 @@ export const useArticlesStore = create((set) => ({
       set((state) => ({
         ...state,
         articles: [...state.articles, data.data],
+        loading: false,
+      }));
+
+      return { success: true };
+    } else {
+      set((state) => ({ ...state, error, loading: false }));
+      return { success: false };
+    }
+  },
+
+  async updateArticle(articleSlug, article) {
+    set((state) => ({ ...state, loading: true }));
+
+    const { data, error } = await updateArticle(articleSlug, article);
+
+    if (!error) {
+      set((state) => ({
+        ...state,
+        articles: state.articles.map((article) =>
+          article._id === data.data._id ? data.data : article
+        ),
         loading: false,
       }));
 

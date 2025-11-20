@@ -19,6 +19,7 @@ export default function UpdateArticlePage() {
     article,
     loadArticle,
     loading: loadingUpdateArticle,
+    updateArticle,
     deleteArticle,
   } = useArticlesStore();
   const { categories, loadMyCategories } = useCategoriesStore();
@@ -113,8 +114,6 @@ export default function UpdateArticlePage() {
   };
 
   const handleEditorChange = (html) => {
-    console.log(html);
-
     setForm({
       ...form,
       content: html,
@@ -130,8 +129,11 @@ export default function UpdateArticlePage() {
     if (!isValid) {
       return;
     }
+    const { success } = await updateArticle(articleSlug, form);
 
-    // TODO update article
+    if (success) {
+      navigate(`/user/${workbenchId}/articles`);
+    }
   };
 
   const handleDeleteArticle = async (event) => {

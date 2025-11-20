@@ -15,6 +15,12 @@ export function createArticle(workbench) {
   return handleApiRequest(() => privateApi.post(`/articles`, workbench));
 }
 
+export function updateArticle(articleSlug, workbench) {
+  return handleApiRequest(() =>
+    privateApi.patch(`/articles/${articleSlug}`, workbench)
+  );
+}
+
 export function deleteArticle(articleId) {
   return handleApiRequest(() => privateApi.delete(`/articles/${articleId}`));
 }
