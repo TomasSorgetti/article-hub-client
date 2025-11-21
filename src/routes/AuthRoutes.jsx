@@ -3,12 +3,14 @@ import AuthGuard from "../components/guards/AuthGuard";
 
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
+import RegisterSuccess from "../pages/auth/RegisterSuccess";
 import VerifyEmailPage from "../pages/auth/VerifyEmailPage";
 
 const authRoutes = [
   { path: "login", element: <LoginPage /> },
   { path: "register", element: <RegisterPage /> },
-  { path: "verify", element: <VerifyEmailPage /> },
+  { path: "register-success", element: <RegisterSuccess /> },
+  { path: "verify-email", element: <VerifyEmailPage /> },
 ];
 
 export default function AuthRoutes() {

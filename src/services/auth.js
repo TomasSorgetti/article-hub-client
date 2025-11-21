@@ -13,6 +13,16 @@ export function SignUpUser({ username, email, password }) {
   );
 }
 
+export function VerifyEmail(token) {
+  return handleApiRequest(() =>
+    privateApi.post(`/auth/verify-email?token=${token}`)
+  );
+}
+
+export function ResendVerification() {
+  throw new Error("Not implemented");
+}
+
 export function SignOutUser() {
   return handleApiRequest(() => privateApi.post(`/auth/logout`));
 }

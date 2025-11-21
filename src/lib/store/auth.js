@@ -65,10 +65,12 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  register: async ({ uername, email, password }) => {
+  register: async ({ username, email, password }) => {
     set({ loading: true, error: null });
     try {
-      const { data, error } = await SignUpUser({ uername, email, password });
+      const { data, error } = await SignUpUser({ username, email, password });
+
+      console.log({ data, error });
 
       if (error) {
         throw new Error(error.message);
@@ -83,7 +85,7 @@ export const useAuthStore = create((set) => ({
         error: null,
       });
 
-      return { success: true };
+      return { success: true, data: data?.data };
     } catch (err) {
       set({
         error: err?.message || err,

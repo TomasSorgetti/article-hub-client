@@ -64,13 +64,17 @@ export default function RegisterPage() {
       return;
     }
 
-    const { success } = await register(form);
+    const { success, data } = await register(form);
 
     if (success) {
       if (redirect) {
-        return navigate(`/auth/login?redirect=${redirect}`);
+        return navigate(
+          `/auth/register-success?expires_in=${data.tokenExpiresIn}&redirect=${redirect}`
+        );
       }
-      return navigate("/auth/login");
+      return navigate(
+        `/auth/register-success?expires_in=${data.tokenExpiresIn}`
+      );
     }
   };
 
