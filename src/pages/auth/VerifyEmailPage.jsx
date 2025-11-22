@@ -35,6 +35,7 @@ export default function VerifyEmailPage() {
       }, 1000);
 
       const timeout = setTimeout(() => {
+        localStorage.removeItem("emailVerified");
         navigate("/auth/login");
       }, 5000);
 

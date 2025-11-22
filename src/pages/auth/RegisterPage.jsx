@@ -18,7 +18,7 @@ import {
 export default function RegisterPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { googleLogin, register } = useAuthStore();
+  const { googleLogin, register, loading } = useAuthStore();
   const [errorResponse, setErrorResponse] = useState("");
   const [form, setForm] = useState({
     username: "",
@@ -174,7 +174,7 @@ export default function RegisterPage() {
             Acept terms and conditions
           </CustomCheck>
 
-          <FormButton className="mt-4">Sign Up</FormButton>
+          <FormButton className="mt-4" disabled={loading} loading={loading}>Sign Up</FormButton>
 
           <small className="text-base text-center mt-4">
             Allready have an account?{" "}
